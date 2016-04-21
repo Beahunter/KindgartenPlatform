@@ -8,79 +8,86 @@ import java.util.Date;
 
 public class Temperature implements java.io.Serializable {
 
-    // Fields
+	// Fields
 
-    private Long id;
+	private Long id;
+	private Long teacherId;
+	private Integer temperature;
+	private Date date;
+	private String remark;
+	private Long childId;
 
-    private Long userId;
+	// Constructors
 
-    private Integer temperature;
+	/** default constructor */
+	public Temperature() {
+	}
 
-    private Date date;
+	/** minimal constructor */
+	public Temperature(Long teacherId, Integer temperature, Long childId) {
+		this.teacherId = teacherId;
+		this.temperature = temperature;
+		this.childId = childId;
+	}
 
-    private String remark;
+	/** full constructor */
+	public Temperature(Long teacherId, Integer temperature, Date date,
+			String remark, Long childId) {
+		this.teacherId = teacherId;
+		this.temperature = temperature;
+		this.date = date;
+		this.remark = remark;
+		this.childId = childId;
+	}
 
-    // Constructors
+	// Property accessors
 
-    /** default constructor */
-    public Temperature() {
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    /** minimal constructor */
-    public Temperature(Long userId, Integer temperature) {
-        this.userId = userId;
-        this.temperature = temperature;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** full constructor */
-    public Temperature(Long userId, Integer temperature, Date date,
-            String remark) {
-        this.userId = userId;
-        this.temperature = temperature;
-        this.date = date;
-        this.remark = remark;
-    }
+	public Long getTeacherId() {
+		return this.teacherId;
+	}
 
-    // Property accessors
+	public void setTeacherId(Long teacherId) {
+		this.teacherId = teacherId;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public Integer getTemperature() {
+		return this.temperature;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setTemperature(Integer temperature) {
+		this.temperature = temperature;
+	}
 
-    public Long getUserId() {
-        return this.userId;
-    }
+	public Date getDate() {
+		return this.date;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public Integer getTemperature() {
-        return this.temperature;
-    }
+	public String getRemark() {
+		return this.remark;
+	}
 
-    public void setTemperature(Integer temperature) {
-        this.temperature = temperature;
-    }
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
-    public Date getDate() {
-        return this.date;
-    }
+	public Long getChildId() {
+		return this.childId;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getRemark() {
-        return this.remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public void setChildId(Long childId) {
+		this.childId = childId;
+	}
 
 }

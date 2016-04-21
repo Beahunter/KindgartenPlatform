@@ -6,78 +6,97 @@ package bean;
 
 public class User implements java.io.Serializable {
 
-    // Fields
+	// Fields
 
-    private Long id;
+	private Long id;
+	private String name;
+	private Short type;
+	private String photo;
+	private Long phoneNumber;
+	private String password;
+	private Long classId;
 
-    private String name;
+	// Constructors
 
-    private Short type;
+	/** default constructor */
+	public User() {
+	}
 
-    private Integer classId;
+	/** minimal constructor */
+	public User(Short type, Long phoneNumber, String password, Long classId) {
+		this.type = type;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.classId = classId;
+	}
 
-    private String photo;
+	/** full constructor */
+	public User(String name, Short type, String photo, Long phoneNumber,
+			String password, Long classId) {
+		this.name = name;
+		this.type = type;
+		this.photo = photo;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.classId = classId;
+	}
 
-    // Constructors
+	// Property accessors
 
-    /** default constructor */
-    public User() {
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    /** minimal constructor */
-    public User(Short type, Integer classId) {
-        this.type = type;
-        this.classId = classId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** full constructor */
-    public User(String name, Short type, Integer classId, String photo) {
-        this.name = name;
-        this.type = type;
-        this.classId = classId;
-        this.photo = photo;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    // Property accessors
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public Short getType() {
+		return this.type;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setType(Short type) {
+		this.type = type;
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public String getPhoto() {
+		return this.photo;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
-    public Short getType() {
-        return this.type;
-    }
+	public Long getPhoneNumber() {
+		return this.phoneNumber;
+	}
 
-    public void setType(Short type) {
-        this.type = type;
-    }
+	public void setPhoneNumber(Long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public Integer getClassId() {
-        return this.classId;
-    }
+	public String getPassword() {
+		return this.password;
+	}
 
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPhoto() {
-        return this.photo;
-    }
+	public Long getClassId() {
+		return this.classId;
+	}
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
+	public void setClassId(Long classId) {
+		this.classId = classId;
+	}
 
 }

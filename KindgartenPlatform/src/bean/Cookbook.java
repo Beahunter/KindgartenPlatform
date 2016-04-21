@@ -8,90 +8,85 @@ import java.util.Date;
 
 public class Cookbook implements java.io.Serializable {
 
-    // Fields
+	// Fields
 
-    private Long id;
+	private Long id;
+	private Long teacherId;
+	private Short type;
+	private Date date;
+	private String photo;
+	private String remark;
 
-    private Long userId;
+	// Constructors
 
-    private Short type;
+	/** default constructor */
+	public Cookbook() {
+	}
 
-    private Date date;
+	/** minimal constructor */
+	public Cookbook(Long teacherId, Short type) {
+		this.teacherId = teacherId;
+		this.type = type;
+	}
 
-    private String photo;
+	/** full constructor */
+	public Cookbook(Long teacherId, Short type, Date date, String photo,
+			String remark) {
+		this.teacherId = teacherId;
+		this.type = type;
+		this.date = date;
+		this.photo = photo;
+		this.remark = remark;
+	}
 
-    private String remark;
+	// Property accessors
 
-    // Constructors
+	public Long getId() {
+		return this.id;
+	}
 
-    /** default constructor */
-    public Cookbook() {
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** minimal constructor */
-    public Cookbook(Long userId, Short type) {
-        this.userId = userId;
-        this.type = type;
-    }
+	public Long getTeacherId() {
+		return this.teacherId;
+	}
 
-    /** full constructor */
-    public Cookbook(Long userId, Short type, Date date, String photo,
-            String remark) {
-        this.userId = userId;
-        this.type = type;
-        this.date = date;
-        this.photo = photo;
-        this.remark = remark;
-    }
+	public void setTeacherId(Long teacherId) {
+		this.teacherId = teacherId;
+	}
 
-    // Property accessors
+	public Short getType() {
+		return this.type;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public void setType(Short type) {
+		this.type = type;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Date getDate() {
+		return this.date;
+	}
 
-    public Long getUserId() {
-        return this.userId;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public String getPhoto() {
+		return this.photo;
+	}
 
-    public Short getType() {
-        return this.type;
-    }
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
-    public void setType(Short type) {
-        this.type = type;
-    }
+	public String getRemark() {
+		return this.remark;
+	}
 
-    public Date getDate() {
-        return this.date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getPhoto() {
-        return this.photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getRemark() {
-        return this.remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 }
