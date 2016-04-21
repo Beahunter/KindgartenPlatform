@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+<type-mapping>
+	<!-- jdbc-type is name fom java.sql.Types -->
+	<sql-type jdbc-type="BIGINT" hibernate-type="java.lang.Long" />
+	<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" />
+	<sql-type jdbc-type="TIMESTAMP" hibernate-type="java.util.Date" />
+	<sql-type jdbc-type="BIT" hibernate-type="java.lang.Boolean"></sql-type>
+	<sql-type jdbc-type="SMALLINT" hibernate-type="java.lang.Short">
+	</sql-type>
+	<sql-type jdbc-type="VARCHAR" hibernate-type="java.lang.String"></sql-type>
+</type-mapping>
+
+<table name="test" catalog="felica01" class="db.Test"></table>
+	<table name="coupon" catalog="felica01" class="db.Coupon"></table>
+	<table name="gainedcoupon" catalog="felica01"
+		class="db.GainedCoupon">
+	</table>
+	<table name="gainedgamecoupon" catalog="felica01"
+		class="db.GainedGameCoupon">
+	</table>
+	<table name="game" catalog="felica01" class="db.Game"></table>
+	<table name="gamecoupon" catalog="felica01" class="db.GameCoupon"></table>
+	<table name="shop" catalog="felica01" class="db.Shop">
+		<column name="creditcardperpoint"></column>
+	</table>
+	<table name="shopcategoly" catalog="felica01"
+		class="db.ShopCategoly">
+	</table>
+	<table name="shopcenter" catalog="felica01" class="db.ShopCenter"></table>
+	<table name="user" catalog="felica01" class="db.User"></table>
+	<table name="usershoppoint" catalog="felica01"
+		class="db.UserShopPoint">
+	</table>
+	<table name="wizard" catalog="felica01" class="db.Wizard"></table>
+	<table name="sch_coupon" catalog="felica01" class="db.SchCoupon"></table>
+	<table name="sch_shop" catalog="felica01" class="db.SchShop"></table>
+	<table name="login" catalog="felica01" class="db.Login"></table>
+	<table name="time" catalog="felica01" class="db.Time"></table>
+	<table name="timetemp" catalog="felica01" class="db.TimeTemp"></table>
+	<table name="timecenter" catalog="felica01" class="db.TimeCenter"></table>
+	<table name="timeshop" catalog="felica01" class="db.TimeShop"></table>
+	<table name="timesystem" catalog="felica01" class="db.TimeSystem"></table>
+	<table name="customer" catalog="felica01" class="db.Customer"></table>
+	<table name="customershoppoint" catalog="felica01"
+		class="db.CustomerShopPoint">
+	</table>
+	<table name="mailuni" catalog="felica01" class="db.MailUni"></table>
+	<table name="mail" catalog="felica01" class="db.Mail"></table>
+	<table name="sctenant" catalog="felica01" class="db.Sctenant"></table>
+	<table name="mailstatic" catalog="felica01" class="db.MailStatic"></table>
+	<table name="specialsale" catalog="felica01"
+		class="db.SpecialSale">
+	</table>
+	<table name="ssmaintitle" catalog="felica01"
+		class="db.SSMainTitle">
+	</table>
+	<table name="sssubtitle" catalog="felica01" class="db.SSSubTitle"></table>
+	<table name="gainedmailcoupon" catalog="felica01"
+		class="db.GainedMailCoupon">
+	</table>
+	<table name="mailcoupon" catalog="felica01" class="db.MailCoupon"></table>
+	<table name="mailsendlist" catalog="felica01"
+		class="db.MailSendList">
+	</table>
+	<table name="anketto" catalog="felica01" class="db.Anketto"></table>
+	<table name="ankettoanswer" catalog="felica01"
+		class="db.AnkettoAnswer">
+	</table>
+	<table name="ankettocoupon" catalog="felica01"
+		class="db.AnkettoCoupon">
+	</table>
+	<table name="ankettoquestion" catalog="felica01"
+		class="db.AnkettoQuestion">
+	</table>
+	<table name="category" catalog="felica01" class="db.Category"></table>
+	<table name="gainedankettocoupon" catalog="felica01"
+		class="db.GainedAnkettoCoupon">
+	</table>
+	<table name="gainedstampcoupon" catalog="felica01"
+		class="db.GainedStampCoupon">
+	</table>
+	<table name="gameprize" catalog="felica01" class="db.GamePrize"></table>
+	<table name="mailsendinfo" catalog="felica01"
+		class="db.MailSendInfo">
+	</table>
+	<table name="mailsendinglist" catalog="felica01"
+		class="db.MailSendingList">
+	</table>
+	<table name="message" catalog="felica01" class="db.Message"></table>
+	<table name="messageuser" catalog="felica01"
+		class="db.MessageUser">
+	</table>
+	<table name="periodicmail" catalog="felica01"
+		class="db.PeriodicMail">
+	</table>
+	<table name="pointcoupon" catalog="felica01"
+		class="db.PointCoupon">
+	</table>
+	<table name="sc_noticemail" catalog="felica01"
+		class="db.SC_NoticeMail">
+	</table>
+	<table name="scbilling" catalog="felica01" class="db.SCBilling"></table>
+	<table name="shop_game" catalog="felica01" class="db.Shop_Game"></table>
+	<table name="shop_gamecouponrecord" catalog="felica01"
+		class="db.Shop_GameCouponRecord">
+	</table>
+	<table name="shop_gameprize" catalog="felica01"
+		class="db.Shop_GamePrize">
+	</table>
+	<table name="shop_mailcouponrecord" catalog="felica01"
+		class="db.Shop_MailCouponRecord">
+	</table>
+	<table name="shop_noticemail" catalog="felica01"
+		class="db.Shop_NoticeMail">
+	</table>
+	<table name="shop_pointcouponrecord" catalog="felica01"
+		class="db.Shop_PointCouponRecord">
+	</table>
+	<table name="shop_pointpage" catalog="felica01"
+		class="db.Shop_PointPage">
+	</table>
+	<table name="shop_pointrecord" catalog="felica01"
+		class="db.Shop_PointRecord">
+	</table>
+	<table name="shoppingcenter" catalog="felica01"
+		class="db.ShoppingCenter">
+	</table>
+	<table name="ssaccess" catalog="felica01" class="db.SSAccess"></table>
+	<table name="stamp" catalog="felica01" class="db.Stamp"></table>
+	<table name="stampcoupon" catalog="felica01"
+		class="db.StampCoupon">
+	</table>
+	<table name="stamppremium" catalog="felica01"
+		class="db.StampPremium">
+	</table>
+	<table name="stampshop" catalog="felica01" class="db.StampShop"></table>
+	<table name="stampuser" catalog="felica01" class="db.StampUser"></table>
+	<table name="systembilling" catalog="felica01"
+		class="db.SystemBilling">
+	</table>
+	<table name="sc_pointrecord" catalog="felica01"
+		class="db.SC_PointRecord">
+	</table>
+	<table name="sc_game" catalog="felica01" class="db.SC_Game"></table>
+	<table name="mail_mailcoupon" catalog="felica01"
+		class="db.Mail_MailCoupon">
+	</table>
+	<table name="sentmail_birthday" catalog="felica01"
+		class="db.SentMail_Birthday">
+	</table>
+	<table name="sc_stamp" catalog="felica01" class="db.SC_Stamp"></table>
+	<table name="sc_gameaccessrecord" catalog="felica01"
+		class="db.SC_GameAccessRecord">
+	</table>
+	<table name="shop_gameaccessrecord" catalog="felica01"
+		class="db.Shop_GameAccessRecord">
+	</table>
+	<table name="shop_pointrecord_drill" catalog="felica01"
+		class="db.Shop_PointRecordDrill">
+	</table>
+	<table name="sc_pointrecord_drill" catalog="felica01"
+		class="db.SC_PointRecordDrill">
+	</table>
+	<table name="sc_selectshoppointrecord_drill" catalog="felica01"
+		class="db.SC_SelectShopPointRecordDrill">
+	</table>
+	<table name="service" catalog="felica01" class="db.Service"></table>
+	<table name="staff" catalog="felica01" class="db.Staff"></table>
+	<table name="sale" catalog="felica01" class="db.Sale"></table>
+</hibernate-reverse-engineering>

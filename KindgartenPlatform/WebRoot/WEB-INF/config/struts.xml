@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<!-- 指定由spring负责action对象的创建 -->
+	<constant name="struts.objectFactory" value="spring"/>
+	
+	<!-- 上传文件大小 -->
+	<constant name="struts.multipart.maxSize" value="10000000"/>
+	
+	<!--请求参数的编码方式 --> 
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+   <!-- 建立struts bean  -->
+<!--例如：
+   <package name="ManageMainBase" extends="struts-default">
+		<action name="aaction" class="aaction">
+		 <result name="success">/WEB-INF/rl/manage/dashboard/TargetManage/listmonthtarget.jsp
+		 </result>
+		</action>
+   </package> -->
+  
+</struts>

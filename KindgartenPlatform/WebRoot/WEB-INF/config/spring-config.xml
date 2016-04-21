@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop" 
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		                    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		                    http://www.springframework.org/schema/context
+		                    http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		                    http://www.springframework.org/schema/aop
+		                    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		                    http://www.springframework.org/schema/tx 
+		                    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+		                    
+    <!-- 数据库配置文件 -->
+    <context:property-placeholder location="/WEB-INF/config/datasource-conn-cfg.properties"/>
+  	
+  	<!-- Proxool 数据库数据源 -->
+	<bean id="mainDataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<!-- 数据源别名 -->
+		<property name="alias" value="${main.alias}"/>
+		<!-- 驱动 -->
+		<property name="driver" value="${jdbc-0.proxool.driver-class}"/>
+		<!-- 驱动链接 -->
+		<property name="driverUrl" value="${jdbc-0.proxool.driver-url}"/>
+		<!-- 用户 -->
+		<property name="user" value="${jdbc-0.user}"/>
+		<!-- 密码 -->
+		<property name="password" value="${jdbc-0.password}"/>
+		<!-- 最大连接数（默认是15）,超过了这个连接数,再有请求时,就排在队列中等候 -->
+        <property name="maximumConnectionCount" value="${jdbc-0.proxool.maximum-connection-count}"/>
+        <!-- 最小连接数（默认2个） -->
+        <property name="minimumConnectionCount" value="${jdbc-0.proxool.minimum-connection-count}"/>
+        <!-- 最少保持的空闲连接数（默认2个） -->
+        <property name="prototypeCount" value="${jdbc-0.proxool.prototype-count}"/>
+        <!-- 如果一个线程活动时间超过这个数值，线程会被杀死 默认是5分钟-->
+        <property name="maximumActiveTime" value="${jdbc-0.proxool.maximum-active-time}"/>
+        <!-- 是指在任一时刻，可以（同时）建立的最大连接数 默认值是 10-->
+        <property name="simultaneousBuildThrottle" value="${jdbc-0.proxool.simultaneous-build-throttle}"/>
+        <!-- 日志统计跟踪类型。 参数“ERROR”或 “INFO” -->
+        <property name="statisticsLogLevel" value="${jdbc-0.proxool.statistics-log-level}"/>
+        <!-- 保持数据库连接所使用的SQL语句 -->
+        <property name="houseKeepingTestSql" value="${jdbc-0.proxool.house-keeping-test-sql}"/> 
+		
+		<!-- 检查连接是否可用 -->
+        <!-- <property name="test-before-use" value="true"/> -->
+        <!-- 指一个连接最大的存活时间（毫秒为单位），超过这个时间，连接会被杀死。默认值是4小时。 -->
+        <!--  <property name="maximumConnectionLifetime" value="100"/> -->
+        <!-- 时间隔定时检查 默认30秒-->
+        <!-- <property name="houseKeepingSleepTime" value="${house-keeping-sleep-time}"/> -->
+	</bean>
+	
+	
+	
+	<!-- hibernate数据库配置定义 -->
+ 	<bean id="sessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+  		<!-- 注入数据源 -->
+  		<property name="dataSource" ref="mainDataSource"/>
+		<!-- hibernate的通用配置 -->
+		<property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>  
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop> 
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>  
+                <prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>  
+                <prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
+           		<prop key="hibernate.connection.release_mode">after_transaction</prop>     
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>  
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>  
+                <prop key="hibernate.cglib.use_reflection_optimizer">${hibernate.cglib.use_reflection_optimizer}</prop>               
+            </props>  
+        </property> 
+		<!-- 实体的管理 -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:bean/*.hbm.xml</value> 
+			</list>
+		</property>
+		
+		<!-- <property name="entityInterceptor"  ref="hibernateInterceptor" /> -->
+		
+ 	</bean>	
+ 	
+ 	<!-- 配置事务切面 -->
+	<aop:config>
+		<!-- 模块 级别 -->
+		<!-- <aop:advisor pointcut="execution(* rl.modules.tools.service..*.*(..))" advice-ref="dataSourceAop" /> -->
+		<!-- 模块具体功能 包级别 -->
+		<!-- <aop:advisor pointcut="execution(* rl.modules.tools.service.role.impl.*.*(..))" advice-ref="dataSourceAop" /> -->
+		<!-- 模块具体功能实现 类级别 -->
+		<!-- <aop:advisor pointcut="execution(* rl.modules.tools.service.role.impl.RoleServiceImpl.*(..))" advice-ref="dataSourceAop" /> -->
+		<!-- 模块具体功能实现 方法级别 -->
+		<!-- <aop:advisor pointcut="execution(* rl.modules.tools.service.role.impl.RoleServiceImpl.queryInfos(..))" advice-ref="dataSourceAop" /> -->
+	 </aop:config>
+	 
+    <!-- 事务属性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- propagation="SUPPORTS" 这一事务属性表明，如果业务方法在某个事务范围内被调用，则方法成为该事务的一部分。 如果业务方法在事务范围外被调用，则方法在没有事务的环境下执行  
+         默认值propagation="REQUIRED"业务方法需要在一个事务中运行。 如果方法运行时，已经处在一个事务中，那么加入到该事务，否则为自己创建一个新的事务 -->
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="build*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!--  spring bean注入管理 -->
+	<import resource="spring-bean.xml"/>
+</beans>
