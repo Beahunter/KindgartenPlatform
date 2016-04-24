@@ -12,14 +12,14 @@
 	
 	<!--请求参数的编码方式 --> 
 	<constant name="struts.i18n.encoding" value="UTF-8" />
+   <!-- 开启用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" /> 
 
    <!-- 建立struts bean  -->
-<!--例如：
-   <package name="ManageMainBase" extends="struts-default">
-		<action name="aaction" class="aaction">
-		 <result name="success">/WEB-INF/rl/manage/dashboard/TargetManage/listmonthtarget.jsp
-		 </result>
+
+   <package name="mobile" namespace="/mobile" extends="struts-default">
+		<action name="basicAction" class="basicAction">
 		</action>
-   </package> -->
+   </package> 
   
 </struts>

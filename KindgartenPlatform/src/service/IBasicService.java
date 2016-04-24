@@ -1,5 +1,6 @@
 package service;
 
+import net.sf.json.JSONObject;
 import bean.User;
 
 /**
@@ -13,7 +14,7 @@ public interface IBasicService {
 	 * @param user
 	 * @return true：登录成功 false:用户不存在
 	 */
-	public boolean login(User user);
+	public JSONObject login(User user) throws Exception;
 	/**
 	 * 注册判断
 	 * @param user

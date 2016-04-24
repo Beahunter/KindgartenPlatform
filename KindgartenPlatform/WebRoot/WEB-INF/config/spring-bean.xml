@@ -20,6 +20,26 @@
             <ref bean="sessionFactory" />
         </property>
     </bean>	
-    
+    <!--    dao bean 注入 -->
+     <bean id="userDaoImpl"
+        class="dao.impl.UserDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+    <bean id="classDaoImpl"
+        class="dao.impl.ClassDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <!--    service bean 注入 -->
+    <bean id="basicServiceImpl"
+        class="service.impl.BasicServiceImpl"  scope="prototype" >
+        <property name="userDao" ref="userDaoImpl"/>
+        <property name="classDao" ref="classDaoImpl"/>
+    </bean>	
+<!--   action bean 注入 -->
+    <bean id="basicAction"
+        class="action.mobile.BasicAction"  scope="prototype" >
+       <property name="basicService" ref="basicServiceImpl" />
+    </bean>	
+
+
+     	
 
 </beans>
