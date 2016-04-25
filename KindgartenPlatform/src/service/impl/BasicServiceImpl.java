@@ -18,14 +18,14 @@ public class BasicServiceImpl implements IBasicService {
 		// TODO Auto-generated method stub
 		// 获取user数据
 		List<User> lstUser = userDao.queryEntitysByPropertys(
-				new String[] { "phoneNumber,password" }, user.getPhoneNumber(),
+				new String[] { "phoneNumber","password" }, user.getPhoneNumber(),
 				user.getPassword());
 		JSONObject json = new JSONObject();
 		// 判断是否存在
 		if (lstUser != null && lstUser.size() > 0) {
 			json.put("status", "1");
 			// 获取class 数据
-			String hql = "select Class from ClassUser cu , Class c where cu.classId = c.id and cu.userId = ?";
+			String hql = "select c from ClassUser cu , Class c where cu.classId = c.id and cu.userId = ?";
 		    @SuppressWarnings("unchecked")
 			List<Class> lstClass=classDao.createQuery(hql, lstUser.get(0).getId()).list();
 		    if(lstClass!=null && lstClass.size()>0){

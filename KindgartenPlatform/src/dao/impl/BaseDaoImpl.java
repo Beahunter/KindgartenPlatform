@@ -30,7 +30,6 @@ public abstract class BaseDaoImpl<T, PK extends Serializable> extends HibernateD
     @SuppressWarnings("unchecked")
     protected Class<T> entityClass = GenericUtil
             .getSuperClassGenericOne(getClass());
-    
     public Session getSession1(){
         return getSession();
     }
@@ -136,6 +135,7 @@ public abstract class BaseDaoImpl<T, PK extends Serializable> extends HibernateD
     public Query createQuery(String hql, Object... values) {
         // TODO Auto-generated method stub
         Assert.hasText(hql);
+     //   hql="from User";
         Query query = getSession().createQuery(hql);
         for (int i = 0; i < values.length; i++) {
             query.setParameter(i, values[i]);
@@ -252,7 +252,10 @@ public abstract class BaseDaoImpl<T, PK extends Serializable> extends HibernateD
             buffer.deleteCharAt(buffer.length() - 1);
             hql += buffer.toString();
         }
-        Query query = getSession().createQuery(hql);
+         Query query =null;
+         Session session =getSession1(); 
+         query = session.createQuery(hql);
+
         if (params != null && params.length > 0) {
             for ( int x = 0; x < params.length; x++ ) {
                 query.setParameter(x, params[x]);

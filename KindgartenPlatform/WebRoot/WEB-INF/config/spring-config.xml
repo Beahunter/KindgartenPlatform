@@ -68,7 +68,8 @@
            		<prop key="hibernate.connection.release_mode">after_transaction</prop>     
                 <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>  
                 <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>  
-                <prop key="hibernate.cglib.use_reflection_optimizer">${hibernate.cglib.use_reflection_optimizer}</prop>               
+                <prop key="hibernate.cglib.use_reflection_optimizer">${hibernate.cglib.use_reflection_optimizer}</prop> 
+                <prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>              
             </props>  
         </property> 
 		<!-- 实体的管理 -->
