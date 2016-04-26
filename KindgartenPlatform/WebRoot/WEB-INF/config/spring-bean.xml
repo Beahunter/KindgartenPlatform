@@ -33,10 +33,18 @@
         <property name="userDao" ref="userDaoImpl"/>
         <property name="classDao" ref="classDaoImpl"/>
     </bean>	
+   <bean id="signInServiceImpl"
+        class="service.impl.SignInServiceImpl"  scope="prototype" >
+        <property name="userDao" ref="userDaoImpl"/>
+    </bean>	
 <!--   action bean 注入 -->
     <bean id="basicAction"
         class="action.mobile.BasicAction"  scope="prototype" >
        <property name="basicService" ref="basicServiceImpl" />
+    </bean>	
+     <bean id="signInAction"
+        class="action.mobile.SignInAction"  scope="prototype" >
+       <property name="signInService" ref="signInServiceImpl" />
     </bean>	
 
 

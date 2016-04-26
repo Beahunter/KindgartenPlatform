@@ -18,8 +18,8 @@ public class BasicServiceImpl implements IBasicService {
 		// TODO Auto-generated method stub
 		// 获取user数据
 		List<User> lstUser = userDao.queryEntitysByPropertys(
-				new String[] { "phoneNumber","password" }, user.getPhoneNumber(),
-				user.getPassword());
+				new String[] { "phoneNumber","password","type" }, user.getPhoneNumber(),
+				user.getPassword(),user.getType());
 		JSONObject json = new JSONObject();
 		// 判断是否存在
 		if (lstUser != null && lstUser.size() > 0) {

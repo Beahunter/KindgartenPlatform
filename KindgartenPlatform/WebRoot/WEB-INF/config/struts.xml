@@ -20,6 +20,8 @@
    <package name="mobile" namespace="/mobile" extends="struts-default">
 		<action name="basicAction" class="basicAction">
 		</action>
+		<action name="signInAction" class="signInAction">
+		</action>
    </package> 
   
 </struts>
