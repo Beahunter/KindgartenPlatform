@@ -1,6 +1,11 @@
 package service;
 
+import java.util.Date;
+
 import net.sf.json.JSONObject;
+import bean.Homework;
+import bean.Study;
+import bean.Temperature;
 import bean.User;
 
 /**
@@ -21,5 +26,13 @@ public interface IBasicService {
 	 * @return true :注册成功 false：用户已存在
 	 */
 	public boolean register(User user);
+	
+	public JSONObject saveTemperature(Temperature temp) throws Exception;
+	
+	public JSONObject saveHomework(Homework homework) throws Exception;
+	
+	public JSONObject saveStudy(Study study) throws Exception;
+	
+	public JSONObject queryStudyInfo(Long classId,Date date) throws Exception;
 
 }

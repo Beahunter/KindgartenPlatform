@@ -30,9 +30,9 @@ public class SignInAction extends ActionSupport {
 			String  classid = (String)json.get("classId");
 			JSONObject returnJson =null;
 			if(classid !=null && !classid.isEmpty()){
+				// 获取对应班级的学生信息
 					returnJson = signInService.getStudentInfoByClassId(Long.valueOf(classid));
 			}
-			// 获取对应班级的学生信息
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			if (returnJson != null) {
