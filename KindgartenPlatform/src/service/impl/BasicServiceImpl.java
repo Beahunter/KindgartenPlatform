@@ -40,6 +40,7 @@ public class BasicServiceImpl implements IBasicService {
 		    if(lstClass!=null && lstClass.size()>0){
 		    	json.put("classes", lstClass);
 		    }
+		    json.put("userId", lstUser.get(0).getId());
 		}else{
 			json.put("status", "0");
 		}
