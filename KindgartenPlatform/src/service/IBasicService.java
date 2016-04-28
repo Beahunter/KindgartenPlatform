@@ -34,5 +34,9 @@ public interface IBasicService {
 	public JSONObject saveStudy(Study study) throws Exception;
 	
 	public JSONObject queryStudyInfo(Long classId,Date date) throws Exception;
+	
+	public JSONObject queryHomeworkInfo(JSONObject json) throws Exception;
+	
+	public JSONObject queryTemperatureInfo(JSONObject json) throws Exception;
 
 }

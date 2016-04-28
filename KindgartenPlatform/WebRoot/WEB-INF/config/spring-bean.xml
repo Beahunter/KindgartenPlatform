@@ -27,11 +27,41 @@
     <bean id="classDaoImpl"
         class="dao.impl.ClassDaoImpl" parent="basedao"  scope="prototype" >
      </bean>
+     <bean id="chatDaoImpl"
+        class="dao.impl.ChatDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="classUserDaoImpl"
+        class="dao.impl.ClassUserDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="cookBookDaoImpl"
+        class="dao.impl.CookBookDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="homeworkDaoImpl"
+        class="dao.impl.HomeworkDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="lifeDaoImpl"
+        class="dao.impl.LifeDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="siginInDaoImpl"
+        class="dao.impl.SiginInDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="studyDaoImpl"
+        class="dao.impl.StudyDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="subjectDaoImpl"
+        class="dao.impl.SubjectDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
+     <bean id="temperatureDaoImpl"
+        class="dao.impl.TemperatureDaoImpl" parent="basedao"  scope="prototype" >
+     </bean>
      <!--    service bean 注入 -->
     <bean id="basicServiceImpl"
         class="service.impl.BasicServiceImpl"  scope="prototype" >
         <property name="userDao" ref="userDaoImpl"/>
         <property name="classDao" ref="classDaoImpl"/>
+        <property name="studyDao" ref="studyDaoImpl"/>
+        <property name="temperatureDao" ref="temperatureDaoImpl"/>
+        <property name="homeworkDao" ref="homeworkDaoImpl"/>
     </bean>	
    <bean id="signInServiceImpl"
         class="service.impl.SignInServiceImpl"  scope="prototype" >

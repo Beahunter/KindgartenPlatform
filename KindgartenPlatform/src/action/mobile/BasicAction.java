@@ -213,6 +213,7 @@ public class BasicAction extends ActionSupport {
 			String loginRequest = URLDecoder.decode(
 					request.getParameter("orderJson"), "UTF-8");
 			JSONObject json = JSONObject.fromObject(loginRequest);
+			if(json !=null){
 			String classId = json.getString("classId");
 			String date = json.getString("date");
 			JSONObject returnJson = null;
@@ -234,12 +235,73 @@ public class BasicAction extends ActionSupport {
 			}
 			out.flush();
 			out.close();
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
+	
+	public void getHomeworkInfo(){
+		try {
+			System.out.println("进入getHomeworkInfo ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if(json !=null){
+				// 获取homework详情
+				returnJson = basicService.queryHomeworkInfo(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("getHomeworkInfo response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("getHomeworkInfo response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}	
+	}
 
+	public void getTempInfo(){
+		try {
+			System.out.println("进入getTempInfo ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if(json !=null){
+				// 获取温度详情
+				returnJson = basicService.queryTemperatureInfo(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("getTempInfo response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("getTempInfo response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
