@@ -46,6 +46,7 @@ public class BasicServiceImpl implements IBasicService {
 				json.put("classes", lstClass);
 			}
 			json.put("userId", lstUser.get(0).getId());
+			json.put("userName", lstUser.get(0).getName());
 		} else {
 			json.put("status", "0");
 		}

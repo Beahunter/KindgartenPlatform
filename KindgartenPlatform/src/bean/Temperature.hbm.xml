@@ -13,8 +13,8 @@
         <property name="teacherId" type="java.lang.Long">
             <column name="teacher_id" not-null="true" />
         </property>
-        <property name="temperature" type="java.lang.Integer">
-            <column name="temperature" not-null="true" />
+        <property name="temperature" type="java.lang.Float">
+            <column name="temperature" precision="11" scale="0" not-null="true" />
         </property>
         <property name="date" type="java.util.Date">
             <column name="date" length="10" />

@@ -88,7 +88,7 @@ public class BasicAction extends ActionSupport {
 					temp.setTeacherId(Long.valueOf(teacherId));
 				}
 				if (temperature != null && !temperature.isEmpty()) {
-					temp.setTemperature(Integer.valueOf(temperature));
+					temp.setTemperature(Float.valueOf(temperature));
 				}
 				if (childId != null && !childId.isEmpty()) {
 					temp.setChildId(Long.valueOf(childId));

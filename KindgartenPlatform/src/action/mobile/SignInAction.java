@@ -27,6 +27,7 @@ public class SignInAction extends ActionSupport {
 					"UTF-8");
 			JSONObject json = JSONObject.fromObject(request1);
 			if(json !=null){
+		    System.out.println(json.toString());
 			String  classid = (String)json.get("classId");
 			JSONObject returnJson =null;
 			if(classid !=null && !classid.isEmpty()){

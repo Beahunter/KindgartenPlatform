@@ -13,6 +13,7 @@ public class SignInServiceImpl implements ISignInService {
 	public JSONObject getStudentInfoByClassId(Long classId) {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
+		json.put("status", "1");
 		String hql ="select u from ClassUser cu , User u where cu.userId = u.id and u.type = 3 and cu.classId = ?";
 	    @SuppressWarnings("unchecked")
 		List<User> lstUser=userDao.createQuery(hql, classId).list();

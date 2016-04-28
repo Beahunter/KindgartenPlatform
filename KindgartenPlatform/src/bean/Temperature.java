@@ -12,7 +12,7 @@ public class Temperature implements java.io.Serializable {
 
 	private Long id;
 	private Long teacherId;
-	private Integer temperature;
+	private Float temperature;
 	private Date date;
 	private String remark;
 	private Long childId;
@@ -24,14 +24,14 @@ public class Temperature implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Temperature(Long teacherId, Integer temperature, Long childId) {
+	public Temperature(Long teacherId, Float temperature, Long childId) {
 		this.teacherId = teacherId;
 		this.temperature = temperature;
 		this.childId = childId;
 	}
 
 	/** full constructor */
-	public Temperature(Long teacherId, Integer temperature, Date date,
+	public Temperature(Long teacherId, Float temperature, Date date,
 			String remark, Long childId) {
 		this.teacherId = teacherId;
 		this.temperature = temperature;
@@ -58,11 +58,11 @@ public class Temperature implements java.io.Serializable {
 		this.teacherId = teacherId;
 	}
 
-	public Integer getTemperature() {
+	public Float getTemperature() {
 		return this.temperature;
 	}
 
-	public void setTemperature(Integer temperature) {
+	public void setTemperature(Float temperature) {
 		this.temperature = temperature;
 	}
 
