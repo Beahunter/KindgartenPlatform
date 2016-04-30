@@ -62,6 +62,7 @@
         <property name="studyDao" ref="studyDaoImpl"/>
         <property name="temperatureDao" ref="temperatureDaoImpl"/>
         <property name="homeworkDao" ref="homeworkDaoImpl"/>
+        <property name="subjectDao" ref="subjectDaoImpl"/>
     </bean>	
    <bean id="signInServiceImpl"
         class="service.impl.SignInServiceImpl"  scope="prototype" >

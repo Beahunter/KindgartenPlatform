@@ -254,6 +254,7 @@ public abstract class BaseDaoImpl<T, PK extends Serializable> extends HibernateD
         }
          Query query =null;
          Session session =getSession1(); 
+         System.out.println(hql);
          query = session.createQuery(hql);
 
         if (params != null && params.length > 0) {

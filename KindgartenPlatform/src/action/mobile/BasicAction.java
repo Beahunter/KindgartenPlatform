@@ -94,7 +94,8 @@ public class BasicAction extends ActionSupport {
 					temp.setChildId(Long.valueOf(childId));
 				}
 				temp.setRemark(remark);
-				temp.setDate(new Date());
+				temp.setDate(DateUtils.formateDate(new Date(),
+						DateUtils.YYYY_MM_DD_WITN_HYPHEN));
 				JSONObject returnJson = null;
 				returnJson = basicService.saveTemperature(temp);
 				response.setContentType("text/html;charset=utf-8");
@@ -137,7 +138,8 @@ public class BasicAction extends ActionSupport {
 					homework.setClassId(Long.valueOf(classId));
 				}
 				homework.setContent(content);
-				homework.setDate(new Date());
+				homework.setDate(DateUtils.formateDate(new Date(),
+						DateUtils.YYYY_MM_DD_WITN_HYPHEN));
 				JSONObject returnJson = null;
 				returnJson = basicService.saveHomework(homework);
 				response.setContentType("text/html;charset=utf-8");
@@ -184,7 +186,8 @@ public class BasicAction extends ActionSupport {
 					study.setSubjectId(Integer.valueOf(subjectId));
 				}
 				study.setContent(content);
-				study.setDate(new Date());
+				study.setDate(DateUtils.formateDate(new Date(),
+						DateUtils.YYYY_MM_DD_WITN_HYPHEN));
 				JSONObject returnJson = null;
 				returnJson = basicService.saveStudy(study);
 				response.setContentType("text/html;charset=utf-8");
@@ -213,36 +216,36 @@ public class BasicAction extends ActionSupport {
 			String loginRequest = URLDecoder.decode(
 					request.getParameter("orderJson"), "UTF-8");
 			JSONObject json = JSONObject.fromObject(loginRequest);
-			if(json !=null){
-			String classId = json.getString("classId");
-			String date = json.getString("date");
-			JSONObject returnJson = null;
-			if (classId != null && !classId.isEmpty() && date != null
-					&& !date.isEmpty()) {
-				// 获取学习内容详情
-				returnJson=	basicService.queryStudyInfo(Long.valueOf(classId), DateUtils
-						.parseStringToDate(date,
-								DateUtils.YYYY_MM_DD_WITN_HYPHEN));
-			}
-			response.setContentType("text/html;charset=utf-8");
-			PrintWriter out = response.getWriter();
-			if (returnJson != null) {
-				System.out.println("getStudyInfo response :"
-						+ returnJson.toString());
-				out.println(returnJson.toString());
-			} else {
-				System.out.println("getStudyInfo response is null");
-			}
-			out.flush();
-			out.close();
+			if (json != null) {
+				String classId = json.getString("classId");
+				String date = json.getString("date");
+				JSONObject returnJson = null;
+				if (classId != null && !classId.isEmpty() && date != null
+						&& !date.isEmpty()) {
+					// 获取学习内容详情
+					returnJson = basicService.queryStudyInfo(Long
+							.valueOf(classId), DateUtils.parseStringToDate(
+							date, DateUtils.YYYY_MM_DD_WITN_HYPHEN));
+				}
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("getStudyInfo response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("getStudyInfo response is null");
+				}
+				out.flush();
+				out.close();
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
-	
-	public void getHomeworkInfo(){
+
+	public void getHomeworkInfo() {
 		try {
 			System.out.println("进入getHomeworkInfo ");
 			HttpServletRequest request = ServletActionContext.getRequest();
@@ -251,7 +254,7 @@ public class BasicAction extends ActionSupport {
 					request.getParameter("orderJson"), "UTF-8");
 			JSONObject json = JSONObject.fromObject(loginRequest);
 			JSONObject returnJson = null;
-			if(json !=null){
+			if (json != null) {
 				// 获取homework详情
 				returnJson = basicService.queryHomeworkInfo(json);
 				response.setContentType("text/html;charset=utf-8");
@@ -269,10 +272,10 @@ public class BasicAction extends ActionSupport {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	public void getTempInfo(){
+	public void getTempInfo() {
 		try {
 			System.out.println("进入getTempInfo ");
 			HttpServletRequest request = ServletActionContext.getRequest();
@@ -281,7 +284,7 @@ public class BasicAction extends ActionSupport {
 					request.getParameter("orderJson"), "UTF-8");
 			JSONObject json = JSONObject.fromObject(loginRequest);
 			JSONObject returnJson = null;
-			if(json !=null){
+			if (json != null) {
 				// 获取温度详情
 				returnJson = basicService.queryTemperatureInfo(json);
 				response.setContentType("text/html;charset=utf-8");
@@ -301,7 +304,7 @@ public class BasicAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub

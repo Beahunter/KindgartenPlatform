@@ -11,11 +11,13 @@ import util.DateUtils;
 import bean.Class;
 import bean.Homework;
 import bean.Study;
+import bean.Subject;
 import bean.Temperature;
 import bean.User;
 import dao.IClassDao;
 import dao.IHomeWorkDao;
 import dao.IStudyDao;
+import dao.ISubjectDao;
 import dao.ITemperatureDao;
 import dao.IUserdao;
 
@@ -25,6 +27,7 @@ public class BasicServiceImpl implements IBasicService {
 	private ITemperatureDao temperatureDao;
 	private IHomeWorkDao homeworkDao;
 	private IStudyDao studyDao;
+	private ISubjectDao subjectDao;
 
 	@Override
 	public JSONObject login(User user) throws Exception {
@@ -33,6 +36,8 @@ public class BasicServiceImpl implements IBasicService {
 		List<User> lstUser = userDao.queryEntitysByPropertys(new String[] {
 				"phoneNumber", "password", "type" }, user.getPhoneNumber(),
 				user.getPassword(), user.getType());
+		// 获取科目详情
+		List<Subject> lsyUsbSubject = subjectDao.getAll();
 		JSONObject json = new JSONObject();
 		// 判断是否存在
 		if (lstUser != null && lstUser.size() > 0) {
@@ -47,6 +52,7 @@ public class BasicServiceImpl implements IBasicService {
 			}
 			json.put("userId", lstUser.get(0).getId());
 			json.put("userName", lstUser.get(0).getName());
+			json.put("subject", lsyUsbSubject);
 		} else {
 			json.put("status", "0");
 		}
@@ -56,7 +62,18 @@ public class BasicServiceImpl implements IBasicService {
 	@Override
 	public JSONObject saveTemperature(Temperature temp) throws Exception {
 		// TODO Auto-generated method stub
-		temperatureDao.save(temp);
+		List<Temperature> lstTemperature = temperatureDao
+				.queryEntitysByPropertys(new String[] {"childId","date"}, temp.getChildId(),
+						temp.getDate());
+		if(lstTemperature!=null && lstTemperature.size()>0){
+			Temperature temp1 = lstTemperature.get(0);
+			temp1.setRemark(temp.getRemark());
+			temp1.setTemperature(temp.getTemperature());
+			temp1.setTeacherId(temp.getTeacherId());
+			temperatureDao.update(temp1);
+		}else{
+			temperatureDao.save(temp);
+		}
 		JSONObject json = new JSONObject();
 		json.put("status", "1");
 		return json;
@@ -65,16 +82,40 @@ public class BasicServiceImpl implements IBasicService {
 	@Override
 	public JSONObject saveHomework(Homework homework) throws Exception {
 		// TODO Auto-generated method stub
-		homeworkDao.save(homework);
+		List<Homework> lstHomework = homeworkDao.queryEntitysByPropertys(
+				new String[] { "classId", "date" }, homework.getClassId(),
+				homework.getDate());
+		if (lstHomework != null && lstHomework.size() > 0) {
+			Homework homework2 = lstHomework.get(0);
+			homework2.setContent(homework.getContent());
+			homework2.setTeacherId(homework.getTeacherId());
+			homeworkDao.update(homework2);
+		} else {
+			homeworkDao.save(homework);
+		}
 		JSONObject json = new JSONObject();
 		json.put("status", "1");
 		return json;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject saveStudy(Study study) throws Exception {
 		// TODO Auto-generated method stub
-		studyDao.save(study);
+		// List<Study> s = studyDao.queryEntitysByPropertys(new String[] {
+		// "classId", "subjectId", "date" }, study.getClassId(),
+		// study.getSubjectId(), study.getDate());
+		String hql = "select o from Study o  where  o.classId=? and o.subjectId=? and o.date=?";
+		List<Study> s = studyDao.createQuery(hql, study.getClassId(),
+				study.getSubjectId(), study.getDate()).list();
+		if (s != null && s.size() > 0) {
+			Study stu = s.get(0);
+			stu.setContent(study.getContent());
+			stu.setTeacherId(study.getTeacherId());
+			studyDao.update(stu);
+		} else {
+			studyDao.save(study);
+		}
 		JSONObject json = new JSONObject();
 		json.put("status", "1");
 		return json;
@@ -83,7 +124,7 @@ public class BasicServiceImpl implements IBasicService {
 	@Override
 	public JSONObject queryStudyInfo(Long classId, Date date) throws Exception {
 		// TODO Auto-generated method stub
-		String hql = "select su.name,st.content,st.date from Study st , Subject su wher st.subjectId = su.id and st.classId = ? and st.date = ? ";
+		String hql = "select su.name,st.content,st.date from Study st , Subject su where st.subjectId = su.id and st.classId = ? and st.date = ? ";
 		@SuppressWarnings("rawtypes")
 		List list = studyDao.createQuery(hql, classId, date).list();
 		JSONObject json = new JSONObject();
@@ -109,7 +150,7 @@ public class BasicServiceImpl implements IBasicService {
 					String classId = json.getString("classId");
 					String page = json.getString("page");
 					String pageNum = json.getString("pageNum");
-					hql = "select h from Homework h where classId = ? order by date desc";
+					hql = "select h from Homework h where h.classId = ? order by h.date desc";
 					if (classId != null && !classId.isEmpty() && page != null
 							&& !page.isEmpty() && pageNum != null
 							&& !pageNum.isEmpty()) {
@@ -128,9 +169,9 @@ public class BasicServiceImpl implements IBasicService {
 				// 教师,园长权限
 				if (type.equals("2") || type.equals("1")) {
 					if (type.equals("2")) {
-						hql = "select c.name,h.content,h.date from Homework h ,ClassUser cu,Class c  where h.classId = cu.classId and h.classId = c.classId and cu.userId = ? and h.date =? order by h.classId ";
+						hql = "select c.name,h.content,h.date from Homework h ,ClassUser cu,Class c  where h.classId = cu.classId and h.classId = c.id and cu.userId = ? and h.date =? order by h.classId ";
 					} else {
-						hql = "select c.name,h.content,h.date from Homework h ,Class c  where  h.classId = c.classId and cu.userId = ? and h.date = ? order by h.classId ";
+						hql = "select c.name,h.content,h.date from Homework h ,Class c  where  h.classId = c.id and cu.userId = ? and h.date = ? order by h.classId ";
 					}
 					String userId = json.getString("userId");
 					String date = json.getString("date");
@@ -184,20 +225,21 @@ public class BasicServiceImpl implements IBasicService {
 				} else {
 					hql = "select t from Temperature t,ClassUser cu  "
 							+ " where t.childId = cu.userId and cu.classId = ? and  date =? order by t.id desc";
-					if (classId != null && !classId.isEmpty() && date !=null && !date.isEmpty() && page != null
+					if (classId != null && !classId.isEmpty() && date != null
+							&& !date.isEmpty() && page != null
 							&& !page.isEmpty() && pageNum != null
 							&& !pageNum.isEmpty()) {
-						query = temperatureDao.createQuery(hql, Long.valueOf(classId),DateUtils.parseStringToDate(date,
-								DateUtils.YYYY_MM_DD_WITN_HYPHEN));
+						query = temperatureDao.createQuery(hql, Long
+								.valueOf(classId), DateUtils.parseStringToDate(
+								date, DateUtils.YYYY_MM_DD_WITN_HYPHEN));
 					}
 				}
-				if(query !=null){
+				if (query != null) {
 					List<Temperature> lstTemperature = query.list();
-					if(lstTemperature !=null && lstTemperature.size()>0){
+					if (lstTemperature != null && lstTemperature.size() > 0) {
 						json1.put("temp", lstTemperature);
 					}
 				}
-				
 
 			}
 		}
@@ -251,6 +293,14 @@ public class BasicServiceImpl implements IBasicService {
 
 	public void setStudyDao(IStudyDao studyDao) {
 		this.studyDao = studyDao;
+	}
+
+	public ISubjectDao getSubjectDao() {
+		return subjectDao;
+	}
+
+	public void setSubjectDao(ISubjectDao subjectDao) {
+		this.subjectDao = subjectDao;
 	}
 
 }

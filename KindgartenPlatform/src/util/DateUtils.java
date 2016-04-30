@@ -46,6 +46,11 @@ public class DateUtils {
         return retstr;
     }
 
+    public static Date formateDate(Date date,String datePattenStr){
+    	String strDate = getDateFromStr(date,datePattenStr);
+    	Date date1 = parseStringToDate(strDate, datePattenStr);
+    	return date1;
+    }
     /**
      * 指定された日付文字列によって、日付オブジェクトを生成する。
      * 
