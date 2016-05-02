@@ -27,6 +27,8 @@ public interface IBasicService {
 	 */
 	public boolean register(User user);
 	
+	public JSONObject webLogin(User user) throws Exception;
+	
 	public JSONObject saveTemperature(Temperature temp) throws Exception;
 	
 	public JSONObject saveHomework(Homework homework) throws Exception;
@@ -38,5 +40,9 @@ public interface IBasicService {
 	public JSONObject queryHomeworkInfo(JSONObject json) throws Exception;
 	
 	public JSONObject queryTemperatureInfo(JSONObject json) throws Exception;
-
+    
+	public JSONObject queryClassesInfo() throws Exception;
+	public JSONObject queryAllUsersInfo() throws Exception;
+	public JSONObject queryAllSubjectInfo() throws Exception;
+	
 }

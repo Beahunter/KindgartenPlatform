@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+   	<script type="text/javascript" src="../3party/jquery/jquery-2.2.3.min.js"></script>
+  <script type="text/javascript" src="../3party/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+  <script src="../3party/template/template_debug_3_0_0.js"></script>
+ 
+  <link href="../3party/bootstrap-3.3.5-dist/css/bootstrap.css" rel="styleSheet" type="text/css"></link>
+  <link href="../css/common.css" rel="styleSheet" type="text/css"></link>
+	<style type="text/css">
+		.title{
+			border-bottom: solid 1px #ddd;
+		}
+	</style>
+  </head>
+  <body>
+  	<div class="container-fluid">
+    	<div class="row">
+        	<div class="col-sm-12">
+            	<div class="title">
+                	<h4>
+                        全部订单
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="row row-offset-top">
+        	<div class="col-sm-12">
+        		<div class="panel panel-default">
+				   <div class="panel-heading">
+				   	 <select style="width: 300px" class="form-control">
+					 		<option>2016年4月1日到2016年5月1日</option>
+					 		<option>2016年3月1日到2016年4月1日</option>
+					 		<option>2016年2月1日到2016年3月1日</option>
+					 		<option>2016年1月1日到2016年2月1日</option>
+					 		<option>2015年12月1日到2016年1月1日</option>
+					 	</select>
+					 
+				   </div>
+				   <div class="panel-body">
+				   		<table class="table table-bordered table-hover">
+				   			<thead>
+				   				<tr>
+				   					<th>日期</th>
+				   					<th>产品名称</th>
+				   					<th>产品价格</th>
+				   					<th>销售数量</th>
+				   					<th>销售收入</th>
+				   				</tr>
+				   			</thead>
+				   			<tbody>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   				<tr>
+				   					<td>2016-04-01</td>
+				   					<td>四人火锅鱼</td>
+				   					<td>￥888</td>
+				   					<td>1</td>
+				   					<td>￥1200</td>
+				   				</tr>
+				   			</tbody>
+				   		</table>
+				   </div>
+				</div>
+        	</div>
+        </div>
+     </div>
+  	<script>
+  		$("input[name='all']").on("change",function(){
+  			var bool = $(this).prop("checked");
+  			$(this).closest(".js-table").find("tbody input[type='checkbox']").each(function(){
+  				$(this).prop("checked",bool);
+  			});
+  		});
+  	</script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+   	<script type="text/javascript" src="../3party/jquery/jquery-2.2.3.min.js"></script>
+  <script type="text/javascript" src="../3party/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+  <script src="../3party/template/template_debug_3_0_0.js"></script>
+ 
+  <link href="../3party/bootstrap-3.3.5-dist/css/bootstrap.css" rel="styleSheet" type="text/css"></link>
+  <link href="../css/common.css" rel="styleSheet" type="text/css"></link>
+	<style type="text/css">
+		.title{
+			border-bottom: solid 1px #ddd;
+		}
+	</style>
+  </head>
+  <body>
+  	<div class="container-fluid">
+    	<div class="row">
+        	<div class="col-sm-12">
+            	<div class="title">
+                	<h4>
+                        全部订单
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="row row-offset-top">
+        	<div class="col-sm-12">
+        		<div class="table-container">
+        			<table class="table table-hover table-bordered js-table">
+			        	<thead>
+			        		<tr>
+			        			<th><input name="all" type="checkbox"/></th>
+			        			<th>序号</th>
+			        			<th>标题</th>
+			        			<th>时间</th>
+			        			<th>来源</th>
+			        			<th>状态</th>
+			        			<th>操作</th>
+			        		</tr>
+			        	</thead>
+			        	<tbody>
+			        		<tr>
+			        			<td><input type="checkbox"/></td>
+			        			<td>1</td>
+			        			<td>880元标准席(10人餐)</td>
+			        			<td>2016年4月14日</td>
+			        			<td>玩转农家商铺</td>
+			        			<td>已完成</td>
+			        			<td align="center">-</td>
+			        		</tr>
+			        		<tr>
+			        			<td><input type="checkbox"/></td>
+			        			<td>2</td>
+			        			<td>1024元标准席(10人餐)</td>
+			        			<td>2016年4月14日</td>
+			        			<td>玩转农家商铺</td>
+			        			<td>未处理</td>
+			        			<td>
+			        				<button class="btn btn-primary btn-sm">确认</button>
+			        				<button class="btn btn-default btn-sm">取消</button>
+			        			</td>
+			        		</tr>
+			        		<tr>
+			        			<td><input type="checkbox"/></td>
+			        			<td>3</td>
+			        			<td>888元标准席(10人餐)</td>
+			        			<td>2016年4月14日</td>
+			        			<td>玩转农家商铺</td>
+			        			<td>未处理</td>
+			        			<td>
+									<button class="btn btn-primary btn-sm">确认</button>
+			        				<button class="btn btn-default btn-sm">取消</button>
+								</td>
+			        		</tr>
+			        	 
+			        	</tbody>
+			        </table>
+        		</div>
+        	</div>
+        </div>
+     </div>
+  	<script>
+  		$("input[name='all']").on("change",function(){
+  			var bool = $(this).prop("checked");
+  			$(this).closest(".js-table").find("tbody input[type='checkbox']").each(function(){
+  				$(this).prop("checked",bool);
+  			});
+  		});
+  	</script>
+  </body>
+</html>

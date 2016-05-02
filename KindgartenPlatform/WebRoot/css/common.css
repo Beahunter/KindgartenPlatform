@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+@font-face{
+	font-family:Microsoft YaHei;
+	src:url("../font/msyh.ttf") ;
+}
+body{
+	font-family:Microsoft YaHei;
+  	color: rgb(51,51,51);
+  	background-color: #fff;
+	overflow: visible;
+}
+.row-offset-bottom{
+	margin-bottom: 25px;
+}
+.row-offset-top{
+	margin-top:25px;
+}
+.table > tbody > tr > td,
+.table > thead > tr > th{
+	text-align: center;
+	vertical-align: middle;		
+}
+.table > thead > tr > th{
+	    background-color: #f9f9f9;
+}
+.header{
+			border-bottom: solid 1px #ddd;
+		}
+.row-offset-bottom{
+	margin-bottom: 25px;
+}
+.btn-pink{
+	color: #fff;
+	background: #FC6200;
+}
+.btn-pink:hover{
+	color: #fff;
+}

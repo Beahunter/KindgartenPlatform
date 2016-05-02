@@ -22,6 +22,16 @@
 		</action>
 		<action name="signInAction" class="signInAction">
 		</action>
+		<action name="webAction" class="webAction">
+		  <!--   <result name="success">/html/login.jsp
+			</result> -->
+		</action>
    </package> 
-  
+   <package name="web" namespace="/web" extends="struts-default">
+		<action name="webAction" class="webAction">
+		    <result name="success">/html/login.jsp
+			</result>
+		</action>
+   </package> 
+  		
 </struts>

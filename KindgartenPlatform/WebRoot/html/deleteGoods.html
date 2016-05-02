@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+ 	<script type="text/javascript" src="../3party/jquery/jquery-2.2.3.min.js"></script>
+  <script type="text/javascript" src="../3party/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+  <script src="../3party/template/template_debug_3_0_0.js"></script>
+ 
+  <link href="../3party/bootstrap-3.3.5-dist/css/bootstrap.css" rel="styleSheet" type="text/css"></link>
+  <link href="../css/common.css" rel="styleSheet" type="text/css"></link>
+</head>
+<style>
+	
+	@font-face{
+  		font-family:Microsoft YaHei;
+  		src:url("../font/msyh.ttf") ;
+  	}
+  	body{
+  		font-family:Microsoft YaHei;
+  		color: rgb(51,51,51);
+  		background-color: #fff;
+		overflow: visible;
+  	}
+	.title{
+		    padding: 40px 0 15px 30px;
+		}
+	.list{
+		padding-left:0px;
+		}
+	.list ul{
+		padding-left:0px;
+		 margin-bottom: 0px;
+		
+		}
+	.list ul li{
+		list-style:none;
+		display:inline-block;
+		  padding-bottom:10px;
+		  padding:10px 30px;
+		  cursor:pointer;
+		}
+		.menu-item{
+			font-size:16px;
+			font-weight: 200;
+		}
+		.active{
+			border-bottom:solid 2px #7ba9e4;
+		}
+		.search{
+			 padding:10px 30px;
+			}
+		.goods-title{
+			 padding:10px 30px;
+			}
+		.item-footer{
+			display:inline-block;
+			 
+			text-align:center;
+			    text-align: center;
+    			background: #fff;
+				padding:5px;
+				cursor:pointer;
+				float: right;
+		}
+		.item-border{
+		 
+			}
+		.item{
+			 
+			display:block;
+			border-top:solid 1px #ccc;  
+		}
+		.item>*{
+			display: inline-block;
+		}
+		.img{
+			text-align: center;
+    		margin: 20px 0;
+ 
+		}
+		.row-offset-left{
+			padding:0 30px;
+			}
+</style>
+<body >
+	<div class="container-fluid">
+    	<div class="row">
+        	<div class="col-sm-12">
+            	<div class="title">
+                	<h4>
+                        我的商品
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="border-bottom:solid 1px #ddd;">
+        	<div class="col-sm-12">
+            	<div class="list">
+                	 <ul>
+                     	<li data-tpl="tpl1" class="active"><span class="menu-item">实物商品</span></li>
+                        <li data-tpl="tpl2"><span class="menu-item">团购券列表</span></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+         <div class="row" >
+        	<div class="col-sm-4">
+            	<div class="search">
+                	<div class="input-group">
+                        <input type="text" class="form-control" id="search" placeholder="请输入你要查找的商品名称" aria-describedby="inputGroupSuccess4Status">
+                        <span class="input-group-addon">
+                        	<i class="glyphicon glyphicon-search"></i>
+                        </span>
+                	</div>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+        	 
+        </div>
+  </div>
+  
+<script type="text/html" id="tpl1">
+		<div class="row" >
+        	<div class="col-sm-4">
+            	<div class="goods-title">
+                	<p>所有商品 (共{{length}}条)</p> 
+                </div>
+            </div>
+        </div>
+		{{each goodsList as item index}}
+    	<div class="row row-offset-left row-offset-bottom" >
+        	 
+			<div class="col-sm-12">
+				{{each item as i idx}}
+        		<div class="item" data-id ="{{i.id}}">
+                	<div class="img">
+                    	<img src="{{i.path}}"  style="float:left;"/>
+						<span style="float:left; margin-left:15px;">{{i.title}}</span>
+                    </div>
+
+                   <a class="item-footer js-delete"  >
+                    删除</a><a class="item-footer js-edit item-border" style="margin-right:30px;">
+                   编辑</a>
+                </div>
+	{{/each}}
+        	</div>
+		
+        </div>
+	{{/each}} 
+</script>
+  <script src="../js/common.js"></script>
+    <script>
+    	var data = {
+    		tpl1	:	{
+    			goodsList:[
+    			{
+    				id:1,
+    				title:"四人火锅鱼"	,
+    				path:"../images/goods/6.png"
+    			},{
+    				id:2,
+    				title:"四人火锅鱼"	,
+    				path:"../images/goods/5.png"
+    			},{
+    				id:3,
+    				title:"四人火锅鱼"	,
+    				path:"../images/goods/4.png"
+    			},
+    			{
+    				id:4,
+    				title:"三人火锅鱼"	,
+    				path:"../images/goods/6.png"
+    			},{
+    				id:5,
+    				title:"三人火锅鱼"	,
+    				path:"../images/goods/5.png"
+    			},{
+    				id:6,
+    				title:"三人火锅鱼"	,
+    				path:"../images/goods/4.png"
+    			}
+    			
+    			]
+    		},
+    		tpl2	:	{
+    			goodsList:[{
+    				id:1,
+    				title:"2人火锅鱼"	,
+    				path:"../images/goods/6.png"
+    			},{
+    				id:2,
+    				title:"2人火锅鱼"	,
+    				path:"../images/goods/5.png"
+    			},{
+    				id:4,
+    				title:"2人火锅鱼"	,
+    				path:"../images/goods/4.png"
+    			},{
+    				id:3,
+    				title:"2人火锅鱼"	,
+    				path:"../images/goods/3.png"
+    			}]
+    		}
+    	}; 
+    	var Goods =  {
+    		active	:	"",
+    		data	:	{},
+    		counter	:  0,
+    		/**
+    		*要进行渲染的数
+    		*/
+    		init :	function(data,templateId){
+    			if(!data){
+    				return ;
+    			}
+    			this.data =data; 
+    			this.dealAllThings(templateId);
+    			this.bindEvents();
+    		},
+    		dealAllThings	:	function(templateId){
+    			this.templateId = templateId;
+    			this.renderData = $.extend(true,{},this.data[templateId]) || {};
+    			this.render();
+    		},
+
+    		/**
+    		 *传入需要渲染的数据即可
+    		 * 把数据的一维数组转换成为二维数组
+    		 */
+    		dealData	:	function(){
+    			var data = this.renderData;
+    			var length = data.goodsList.length;
+    			var cellCounts = 3;
+    			data["length"] =length;
+    			var arr = [];
+    			var arrAll = [];
+    			for(var j = 0,len = data.goodsList.length-1 ; j <=len ; j++){
+    				var obj = data.goodsList[j];
+    				arr.push(obj);
+    				if(arr.length == cellCounts || j == len){
+    					arrAll.push(arr);
+    					arr = [];
+    				}
+    				
+    			}
+    			data.goodsList = arrAll;
+    			this.renderData = data;
+    		},
+    		getNewId	:	function(){
+    			var id = "item_"+this.counter++;
+    			return id;
+    		},
+    		bindEvents	:	function(){
+    			this.active = $(".active");
+    			var me = this ;
+    			$(".list").find("li").on("click",function(){
+    				$(me.active).removeClass("active");
+    				$(this).addClass("active");
+    				me.active = this; 
+    				$("#container").css({
+    					"opacity":"0" 
+    				}); 
+    				var tpl = $(this).data("tpl");
+    				me.dealAllThings(tpl);
+    			})
+    		},
+    		render	:	function(){ 
+    			this.dealData();
+    			window.Common.render("tpl1",this.renderData);
+    			this.operationEvents();
+    			$("#container").animate({
+    				"opacity":"1" 
+    			},"slow");
+    		},
+    		deleteData	:	function(id){debugger;
+    			var data = this.data[this.templateId];
+    			for(var i in data.goodsList){
+    				var obj = data.goodsList[i];
+    				if(obj.id == id){
+    					data.goodsList.splice(i,1);
+    				}
+    			}
+    		},
+    		operationEvents	:	function(){
+    			var me = this;
+    			$(".js-delete").on("click",function(){
+    				var id = $(this).closest(".item").data("id");
+    				if(!confirm("是否要删除该商品?")){
+    					return ;
+    				}
+    				me.deleteData(id);
+    				me.dealAllThings(me.templateId);
+    			});
+    		}
+    	}; 
+    	Goods.init(data,"tpl1");
+    </script>
+</body>
+</html>

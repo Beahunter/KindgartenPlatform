@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,15 +64,15 @@ public class BasicServiceImpl implements IBasicService {
 	public JSONObject saveTemperature(Temperature temp) throws Exception {
 		// TODO Auto-generated method stub
 		List<Temperature> lstTemperature = temperatureDao
-				.queryEntitysByPropertys(new String[] {"childId","date"}, temp.getChildId(),
-						temp.getDate());
-		if(lstTemperature!=null && lstTemperature.size()>0){
+				.queryEntitysByPropertys(new String[] { "childId", "date" },
+						temp.getChildId(), temp.getDate());
+		if (lstTemperature != null && lstTemperature.size() > 0) {
 			Temperature temp1 = lstTemperature.get(0);
 			temp1.setRemark(temp.getRemark());
 			temp1.setTemperature(temp.getTemperature());
 			temp1.setTeacherId(temp.getTeacherId());
 			temperatureDao.update(temp1);
-		}else{
+		} else {
 			temperatureDao.save(temp);
 		}
 		JSONObject json = new JSONObject();
@@ -150,18 +151,34 @@ public class BasicServiceImpl implements IBasicService {
 					String classId = json.getString("classId");
 					String page = json.getString("page");
 					String pageNum = json.getString("pageNum");
-					hql = "select h from Homework h where h.classId = ? order by h.date desc";
+					String lastDate = json.getString("lastDate");
+					hql = "select h from Homework h where h.classId = ? and h.date < ? order by h.date desc";
 					if (classId != null && !classId.isEmpty() && page != null
 							&& !page.isEmpty() && pageNum != null
 							&& !pageNum.isEmpty()) {
 						List<Homework> lstHomework = homeworkDao
-								.createQuery(hql, Long.valueOf(classId))
+								.createQuery(
+										hql,
+										Long.valueOf(classId),
+										DateUtils
+												.parseStringToDate(
+														lastDate,
+														DateUtils.YYYY_MM_DD_WITN_HYPHEN))
 								.setFirstResult(
 										Integer.valueOf(page)
 												* Integer.valueOf(pageNum))
 								.setMaxResults(Integer.valueOf(pageNum)).list();
 						if (lstHomework != null && lstHomework.size() > 0) {
-							json1.put("homework", lstHomework);
+							List<String[]> list = new ArrayList<String[]>();
+							for (Homework homework : lstHomework) {
+								String[] a = new String[2];
+								a[0] = homework.getContent();
+								a[1] = DateUtils.getDateFromStr(
+										homework.getDate(),
+										DateUtils.YYYY_MM_DD_WITN_HYPHEN);
+								list.add(a);
+							}
+							json1.put("homework", list);
 						}
 					}
 
@@ -245,6 +262,61 @@ public class BasicServiceImpl implements IBasicService {
 		}
 		return json1;
 	}
+	@Override
+	public JSONObject webLogin(User user) throws Exception {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		if(user !=null){
+			List<User> lstUser = userDao.queryEntitysByPropertys(new String[] {
+					"name", "password", "type" }, user.getName(),
+					user.getPassword(), user.getType());
+			if(lstUser !=null && lstUser.size()>0){
+				json.put("status", "1");
+			}else{
+				json.put("status", "0");
+			}
+		}else{
+			json.put("status", "0");
+		}
+		return json;
+	}
+	
+	@Override
+	public JSONObject queryClassesInfo() throws Exception {
+		// TODO Auto-generated method stub
+		List<Class> lstClass = classDao.getAll();
+		JSONObject json = new JSONObject();
+		json.put("status", "1");
+		if(lstClass!=null && lstClass.size()>0){
+			json.put("classes", lstClass);
+		}
+		return json;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject queryAllUsersInfo() throws Exception {
+		// TODO Auto-generated method stub
+		String hql ="select u from User u where u.type !=0";
+		List<User> lstUser = userDao.createQuery(hql).list();
+		JSONObject json = new JSONObject();
+		json.put("status", "1");
+		if(lstUser!=null && lstUser.size()>0){
+			json.put("users", lstUser);
+		}
+		return json;
+	}
+	@Override
+	public JSONObject queryAllSubjectInfo() throws Exception {
+		// TODO Auto-generated method stub
+		List<Subject> lstSubject = subjectDao.getAll();
+		JSONObject json = new JSONObject();
+		json.put("status", "1");
+		if(lstSubject!=null && lstSubject.size()>0){
+			json.put("subjects", lstSubject);
+		}
+		return json;
+	}
 
 	@Override
 	public boolean register(User user) {
@@ -302,5 +374,15 @@ public class BasicServiceImpl implements IBasicService {
 	public void setSubjectDao(ISubjectDao subjectDao) {
 		this.subjectDao = subjectDao;
 	}
+
+
+
+
+
+
+
+
+
+
 
 }

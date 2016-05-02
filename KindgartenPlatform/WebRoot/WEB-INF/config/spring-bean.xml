@@ -77,6 +77,10 @@
         class="action.mobile.SignInAction"  scope="prototype" >
        <property name="signInService" ref="signInServiceImpl" />
     </bean>	
+     <bean id="webAction"
+        class="action.web.WebAction"  scope="prototype" >
+       <property name="basicService" ref="basicServiceImpl" />
+    </bean>	
 
 
      	
