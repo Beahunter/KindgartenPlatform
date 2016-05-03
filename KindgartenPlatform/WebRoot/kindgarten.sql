@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-04-29 00:16:48
+Date: 2016-05-03 00:13:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -98,12 +98,24 @@ CREATE TABLE `homework` (
   `date` date DEFAULT NULL,
   `class_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of homework
 -- ----------------------------
-INSERT INTO `homework` VALUES ('1', '1', '?????', '2016-04-29', '2');
+INSERT INTO `homework` VALUES ('2', '1', '和爸爸做个游戏', '2016-04-30', '2');
+INSERT INTO `homework` VALUES ('3', '1', '学唱一首儿童歌', '2016-04-30', '1');
+INSERT INTO `homework` VALUES ('4', '1', '学习数字', '2016-05-01', '1');
+INSERT INTO `homework` VALUES ('5', '1', '认数字', '2016-04-29', '1');
+INSERT INTO `homework` VALUES ('6', '1', '学习跳舞', '2016-04-28', '1');
+INSERT INTO `homework` VALUES ('7', '1', '学习唱歌', '2016-04-27', '1');
+INSERT INTO `homework` VALUES ('8', '1', '写数字', '2016-04-26', '1');
+INSERT INTO `homework` VALUES ('9', '1', '读数字', '2016-04-25', '1');
+INSERT INTO `homework` VALUES ('10', '1', '认字', '2016-04-24', '1');
+INSERT INTO `homework` VALUES ('11', '1', '写字', '2016-04-23', '1');
+INSERT INTO `homework` VALUES ('12', '1', '读拼音', '2016-04-22', '1');
+INSERT INTO `homework` VALUES ('13', '1', '读课文', '2016-04-21', '1');
+INSERT INTO `homework` VALUES ('14', '1', '读书', '2016-04-20', '1');
 
 -- ----------------------------
 -- Table structure for life
@@ -153,11 +165,16 @@ CREATE TABLE `study` (
   `subject_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of study
 -- ----------------------------
+INSERT INTO `study` VALUES ('1', '1', '一起做游戏', '2016-04-29', '1', '1');
+INSERT INTO `study` VALUES ('2', '1', '学习英文之母歌', '2016-04-30', '3', '1');
+INSERT INTO `study` VALUES ('3', '1', '学习写数字', '2016-04-30', '2', '1');
+INSERT INTO `study` VALUES ('4', '1', '练握笔', '2016-04-30', '1', '2');
+INSERT INTO `study` VALUES ('5', '1', '好好学习', '2016-05-02', '1', '1');
 
 -- ----------------------------
 -- Table structure for subject
@@ -167,11 +184,14 @@ CREATE TABLE `subject` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of subject
 -- ----------------------------
+INSERT INTO `subject` VALUES ('1', '语文');
+INSERT INTO `subject` VALUES ('2', '数学');
+INSERT INTO `subject` VALUES ('3', '英语');
 
 -- ----------------------------
 -- Table structure for temperature
@@ -185,15 +205,15 @@ CREATE TABLE `temperature` (
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `child_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of temperature
 -- ----------------------------
-INSERT INTO `temperature` VALUES ('1', '1', '37.0', '2016-04-28', '??', '3');
 INSERT INTO `temperature` VALUES ('2', '1', '37.0', '2016-04-27', '是多少', '3');
 INSERT INTO `temperature` VALUES ('3', '1', '36.5', '2016-04-29', 'dfdfd', '4');
-INSERT INTO `temperature` VALUES ('4', '1', '37.5', '2016-04-28', '??', '3');
+INSERT INTO `temperature` VALUES ('5', '1', '37.5', '2016-04-30', '身体棒棒哒哒', '3');
+INSERT INTO `temperature` VALUES ('6', '1', '25.5', '2016-05-02', '133', '2');
 
 -- ----------------------------
 -- Table structure for user
@@ -209,7 +229,7 @@ CREATE TABLE `user` (
   `class_id` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_phone_number` (`phone_number`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -218,3 +238,5 @@ INSERT INTO `user` VALUES ('1', '郑宇翔', '2', null, '18380462530', '123456',
 INSERT INTO `user` VALUES ('2', '小张', '3', null, '18380462531', '123456', null);
 INSERT INTO `user` VALUES ('3', '小王', '3', null, '18380462532', '123456', null);
 INSERT INTO `user` VALUES ('4', '小红', '3', null, '18380462533', '123456', null);
+INSERT INTO `user` VALUES ('5', 'admin', '0', null, '12345678901', '123456', null);
+INSERT INTO `user` VALUES ('6', '刘园长', '1', null, '18380462555', '123456', null);

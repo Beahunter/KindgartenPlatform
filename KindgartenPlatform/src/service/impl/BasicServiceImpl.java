@@ -210,7 +210,7 @@ public class BasicServiceImpl implements IBasicService {
 		return json1;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public JSONObject queryTemperatureInfo(JSONObject json) throws Exception {
 		// TODO Auto-generated method stub
@@ -220,41 +220,41 @@ public class BasicServiceImpl implements IBasicService {
 		Query query = null;
 		if (json != null) {
 			String type = json.getString("type");
-			String userId = json.getString("userId");
-			String page = json.getString("page");
-			String pageNum = json.getString("pageNum");
-			String date = json.getString("date");
-			String classId = json.getString("classId");
 			if (type != null) {
 				// 家长权限
 				if (type.equals("3")) {
-					hql = "select t from Temperature t where childId =? order by t.date desc";
+					String userId = json.getString("userId");
+					String page = json.getString("page");
+					String pageNum = json.getString("pageNum");
+					String lastDate = json.getString("lastDate");
+					hql = "select t,u from Temperature t,User u  where t.childId = u.id and t.childId =? and date <? order by t.date desc";
 					if (userId != null && !userId.isEmpty() && page != null
 							&& !page.isEmpty() && pageNum != null
 							&& !pageNum.isEmpty()) {
 						query = temperatureDao
-								.createQuery(hql, Long.valueOf(userId))
+								.createQuery(hql, Long.valueOf(userId),DateUtils.parseStringToDate(
+										lastDate, DateUtils.YYYY_MM_DD_WITN_HYPHEN))
 								.setFirstResult(
 										Integer.valueOf(page)
 												* Integer.valueOf(pageNum))
 								.setMaxResults(Integer.valueOf(pageNum));
 					}
 				} else {
-					hql = "select t from Temperature t,ClassUser cu  "
-							+ " where t.childId = cu.userId and cu.classId = ? and  date =? order by t.id desc";
+					String date = json.getString("date");	
+					String classId = json.getString("classId");
+					hql = "select t,u from Temperature t,ClassUser cu,User u   "
+							+ " where t.childId = cu.userId and t.childId = u.id  and cu.classId = ? and  date =? order by t.id desc";
 					if (classId != null && !classId.isEmpty() && date != null
-							&& !date.isEmpty() && page != null
-							&& !page.isEmpty() && pageNum != null
-							&& !pageNum.isEmpty()) {
+							&& !date.isEmpty() ) {
 						query = temperatureDao.createQuery(hql, Long
 								.valueOf(classId), DateUtils.parseStringToDate(
 								date, DateUtils.YYYY_MM_DD_WITN_HYPHEN));
 					}
 				}
 				if (query != null) {
-					List<Temperature> lstTemperature = query.list();
-					if (lstTemperature != null && lstTemperature.size() > 0) {
-						json1.put("temp", lstTemperature);
+					List list = query.list();
+					if (list != null && list.size() > 0) {
+						json1.put("temp", list);
 					}
 				}
 
