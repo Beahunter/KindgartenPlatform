@@ -239,7 +239,7 @@ public class BasicServiceImpl implements IBasicService {
 												* Integer.valueOf(pageNum))
 								.setMaxResults(Integer.valueOf(pageNum));
 					}
-				} else {
+				} else if(type.equals("1")||type.equals("2")) {
 					String date = json.getString("date");	
 					String classId = json.getString("classId");
 					hql = "select t,u from Temperature t,ClassUser cu,User u   "

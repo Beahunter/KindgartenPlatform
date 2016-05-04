@@ -286,6 +286,7 @@ public class BasicAction extends ActionSupport {
 			JSONObject json = JSONObject.fromObject(loginRequest);
 			JSONObject returnJson = null;
 			if (json != null) {
+				System.out.println(json.toString());
 				// 获取温度详情
 				returnJson = basicService.queryTemperatureInfo(json);
 				response.setContentType("text/html;charset=utf-8");
