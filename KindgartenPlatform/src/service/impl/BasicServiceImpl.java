@@ -30,6 +30,7 @@ public class BasicServiceImpl implements IBasicService {
 	private IStudyDao studyDao;
 	private ISubjectDao subjectDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject login(User user) throws Exception {
 		// TODO Auto-generated method stub
@@ -45,9 +46,13 @@ public class BasicServiceImpl implements IBasicService {
 			json.put("status", "1");
 			// 获取class 数据
 			String hql = "select c from ClassUser cu , Class c where cu.classId = c.id and cu.userId = ?";
-			@SuppressWarnings("unchecked")
-			List<Class> lstClass = classDao.createQuery(hql,
+			List<Class> lstClass =null;
+			if(user.getType() == 1){
+				lstClass=classDao.getAll();
+			}else{
+			lstClass= classDao.createQuery(hql,
 					lstUser.get(0).getId()).list();
+			}
 			if (lstClass != null && lstClass.size() > 0) {
 				json.put("classes", lstClass);
 			}
@@ -188,18 +193,27 @@ public class BasicServiceImpl implements IBasicService {
 					if (type.equals("2")) {
 						hql = "select c.name,h.content,h.date from Homework h ,ClassUser cu,Class c  where h.classId = cu.classId and h.classId = c.id and cu.userId = ? and h.date =? order by h.classId ";
 					} else {
-						hql = "select c.name,h.content,h.date from Homework h ,Class c  where  h.classId = c.id and cu.userId = ? and h.date = ? order by h.classId ";
+						hql = "select c.name,h.content,h.date from Homework h ,Class c  where  h.classId = c.id and h.date = ? order by h.classId ";
 					}
 					String userId = json.getString("userId");
 					String date = json.getString("date");
 					if (userId != null && !userId.isEmpty() && date != null
 							&& !date.isEmpty()) {
-						List list = homeworkDao.createQuery(
-								hql,
-								Long.valueOf(userId),
-								DateUtils.parseStringToDate(date,
-										DateUtils.YYYY_MM_DD_WITN_HYPHEN))
-								.list();
+						List list = null;
+						if(type.equals("2")){
+							list=	homeworkDao.createQuery(
+									hql,
+									Long.valueOf(userId),
+									DateUtils.parseStringToDate(date,
+											DateUtils.YYYY_MM_DD_WITN_HYPHEN))
+									.list();
+						}else{
+							list=	homeworkDao.createQuery(
+									hql,
+									Long.valueOf(userId))
+									.list();
+						}
+					
 						if (list != null && list.size() > 0) {
 							json1.put("homework", list);
 						}
