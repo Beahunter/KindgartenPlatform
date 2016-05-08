@@ -1,5 +1,6 @@
 package action.mobile;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.Date;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 
 import service.IBasicService;
 import util.DateUtils;
@@ -301,6 +303,62 @@ public class BasicAction extends ActionSupport {
 				out.flush();
 				out.close();
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateUserPassword(){
+		try {
+			System.out.println("进入updateUserPassword ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if (json != null) {
+				System.out.println(json.toString());
+				returnJson = basicService.updateUserPassword(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("saveCookbookInfo response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("saveCookbookInfo response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateUserHeaderImage(){
+		try {
+			System.out.println("进入updateUserHeaderImage ");
+			MultiPartRequestWrapper request = (MultiPartRequestWrapper) ServletActionContext
+					.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String userId = request.getParameter("userId");
+			String[] s = request.getFileNames("inputName");
+			File[] f = request.getFiles("inputName");
+			String path = ServletActionContext.getServletContext().getRealPath(
+					File.separator + "upload");
+			File parentfile = new File(path);
+			if (!parentfile.exists()) {
+				parentfile.mkdir();
+			}
+			String newname = s[0];
+			File newfile = new File(path + File.separator + newname);
+			f[0].renameTo(newfile);
+			System.out.println(newfile.getPath());
+			basicService.updateUserHeaderImage(Long.valueOf(userId), newname);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

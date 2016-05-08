@@ -28,7 +28,7 @@
             <column name="password" not-null="true" />
         </property>
         <property name="classId" type="java.lang.Long">
-            <column name="class_id" not-null="true" />
+            <column name="class_id"  />
         </property>
     </class>
 </hibernate-mapping>

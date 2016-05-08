@@ -40,6 +40,12 @@ public interface IBasicService {
 	public JSONObject queryHomeworkInfo(JSONObject json) throws Exception;
 	
 	public JSONObject queryTemperatureInfo(JSONObject json) throws Exception;
+	
+	public JSONObject updateUserPassword(JSONObject json) throws Exception;
+	
+	public JSONObject saveOrUpdateUser(JSONObject json) throws Exception;
+	
+	public JSONObject updateUserHeaderImage(Long userId,String photo) throws Exception;
     
 	public JSONObject queryClassesInfo() throws Exception;
 	public JSONObject queryAllUsersInfo() throws Exception;

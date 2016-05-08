@@ -67,6 +67,9 @@
    <bean id="signInServiceImpl"
         class="service.impl.SignInServiceImpl"  scope="prototype" >
         <property name="userDao" ref="userDaoImpl"/>
+        <property name="signInDao" ref="siginInDaoImpl"/>
+        <property name="lifeDao" ref="lifeDaoImpl"/>
+        <property name="cookbookDao" ref="cookBookDaoImpl"/>
     </bean>	
 <!--   action bean 注入 -->
     <bean id="basicAction"

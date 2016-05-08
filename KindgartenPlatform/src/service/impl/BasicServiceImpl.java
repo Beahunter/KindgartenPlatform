@@ -58,6 +58,7 @@ public class BasicServiceImpl implements IBasicService {
 			}
 			json.put("userId", lstUser.get(0).getId());
 			json.put("userName", lstUser.get(0).getName());
+			json.put("userPhoto", lstUser.get(0).getPhoto());
 			json.put("subject", lsyUsbSubject);
 		} else {
 			json.put("status", "0");
@@ -257,7 +258,7 @@ public class BasicServiceImpl implements IBasicService {
 					String date = json.getString("date");	
 					String classId = json.getString("classId");
 					hql = "select t,u from Temperature t,ClassUser cu,User u   "
-							+ " where t.childId = cu.userId and t.childId = u.id  and cu.classId = ? and  date =? order by t.id desc";
+							+ " where t.childId = cu.userId and t.childId = u.id  and cu.classId = ? and  t.date =? order by t.id desc";
 					if (classId != null && !classId.isEmpty() && date != null
 							&& !date.isEmpty() ) {
 						query = temperatureDao.createQuery(hql, Long
@@ -333,6 +334,47 @@ public class BasicServiceImpl implements IBasicService {
 	}
 
 	@Override
+	public JSONObject updateUserPassword(JSONObject json) throws Exception {
+		// TODO Auto-generated method stub
+		JSONObject json1 = new JSONObject();
+		json1.put("status", "1");
+		String userId = json.getString("userId");
+		String newPas = json.getString("newPas");
+		User u = userDao.findUniqueBy("id", Long.valueOf(userId));
+		if(u !=null){
+			u.setPassword(newPas);
+			userDao.update(u);
+		}
+		return json1;
+	}
+
+	@Override
+	public JSONObject updateUserHeaderImage(Long userId,String photo) throws Exception {
+		// TODO Auto-generated method stub
+		JSONObject json1 = new JSONObject();
+		json1.put("status", "1");
+		User u =userDao.findUniqueBy("id", userId);
+		if(u !=null){
+			u.setPhoto(photo);
+			userDao.update(u);
+		}
+		return json1;
+	}
+	
+	@Override
+	public JSONObject saveOrUpdateUser(JSONObject json) throws Exception {
+		// TODO Auto-generated method stub
+		JSONObject json1 = new JSONObject();
+		json1.put("status", "1");
+		String phoneNumber = json.getString("phoneNumber");
+		String name = json.getString("name");
+		String type = json.getString("type");
+		String pas = json.getString("pas");
+		//List<user> 
+		return null;
+	}
+
+	@Override
 	public boolean register(User user) {
 		// TODO Auto-generated method stub
 		// 取出user数据
@@ -388,6 +430,10 @@ public class BasicServiceImpl implements IBasicService {
 	public void setSubjectDao(ISubjectDao subjectDao) {
 		this.subjectDao = subjectDao;
 	}
+
+
+
+
 
 
 

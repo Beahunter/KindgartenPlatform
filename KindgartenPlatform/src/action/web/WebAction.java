@@ -124,6 +124,37 @@ public class WebAction extends ActionSupport {
 				e.printStackTrace();
 			}
 	}
+	
+	public void saveOrUpdateUser(){
+		try {
+			System.out.println("进入saveOrUpdateUser ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if (json != null) {
+				System.out.println(json.toString());
+				returnJson = basicService.updateUserPassword(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("saveCookbookInfo response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("saveCookbookInfo response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	public IBasicService getBasicService() {
 		return basicService;
 	}
