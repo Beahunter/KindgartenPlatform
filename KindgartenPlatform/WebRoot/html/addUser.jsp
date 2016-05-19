@@ -94,9 +94,9 @@
 							<div class="form-group">
 
 								<!-- <input type="text" class="form-control "> -->
-								家长 <input type="radio" name="type" checked="checked" /> 教师 <input
-									type="radio" name="type" /> 园长 <input type="radio"
-									name="type" />
+								家长 <input type="radio" name="type" checked="checked" value="3" /> 教师 <input
+									type="radio" name="type" value="2" /> 园长 <input type="radio"
+									name="type" value="1"  />
 							</div>
 						</div>
 					</div>
@@ -150,9 +150,24 @@
     <script src="my.js"></script>
 	<script type="text/javascript">
 	//alert(1);
+		   var doType ="1";
 		$(document).ready(function() {
+		debugger;
 	//	$.block();
-            sendData("");
+
+	   var userId = localStorage.userId;
+	      doType =  localStorage.doType;
+	 localStorage.removeItem("doType");
+	   var json = new Object();
+	   if(doType == "1"){
+	     json.type = doType;
+
+	   }else if(doType == "2"){
+	      json.type = doType;
+	      json.userId = userId;
+	   }
+	   var str = JSON.stringify(json);
+	     sendData(str);
          /*   var name = "xiaoban";
            var id = 1;
              $("#classes").html("");
@@ -163,29 +178,51 @@
 			$(".js-file-input").trigger("click");
 		});
 		function sendData(str){
-		      $.block();
+		    //  $.block();
 			 setTimeout(function(){ 
 			    $.ajax({
                 type:'post',
                 url:ipVal+'web/webAction!getAllClassesInfo',
                 dataType:'text',
-                data:"orderJson=" + str,
+                data:"orderJson=" + str  ,
                 success: function(data,requestCode){
                 // uexWindow.toast(1,5,"正在加载...",5000);   console.log(requestCode);
                 if(requestCode.indexOf("success")!=-1){
                 if(data!=null && data!=""){
+                debugger;
                 console.log(data);
                var userback = JSON.parse(data);
                 var status = userback.status;
                 if(status!=null && status.indexOf("1")!=-1){
-                   var classes = userback.classes;
+                 var classes = userback.classes;
                     $("#classes").html("");
-                   if(classes !=null && classes.length>0){
+                    if(classes !=null && classes.length>0){
                       for(var i=0;i<classes.length;i++){
                        $("#classes").append("<span>"+classes[i].name+"</span>"); 
                       $("#classes").append('<input type="checkbox" name="classes" value='+classes[i].id+' />'); 
                       }
-                   }
+                    }
+                  if(doType == "2"){
+                    var user = userback.user;
+                    var myClasses = userback.myClasses;
+                     if(user !=null){
+                        $("#name").val(user.name);
+                        $("#phoneNumber").val(user.phoneNumber);
+                        $("#password").val(user.password);
+                        $("input:radio[value='"+user.type+"']").attr("checked",true);
+                        if(user.type == 1){
+                           $('input:checkbox').each(function() {
+                                 $(this).attr('checked', true);
+                            });
+                        }else {
+                         if(myClasses !=null && myClasses.length>0){
+                             for(var i=0;i<myClasses.length;i++){
+                               $("input:checkbox[value='"+myClasses.id+"']").attr('checked',true);
+                           }
+                         }
+                        }
+                     }
+                  }
                 $.unblock();
                 }else{
                   $.unblock();
@@ -207,7 +244,7 @@
                 }
                 
                 })
-                },1000);
+              },1000);
 		}
 	</script>
 </body>

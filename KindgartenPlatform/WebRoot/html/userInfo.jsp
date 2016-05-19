@@ -140,7 +140,7 @@
 															     tr.append('<td>'+users[i].phoneNumber+'</td>');
 															     tr.append('<td>'+type+'</td>');
 															     tr.append('<td align="center"><button class="btn btn-primary btn-sm delete" name="delete">删除</button> <button class="btn btn-primary btn-sm update" name="update"  onclick="update(this)" >修改</button></td>');
-															     tr.append('<td style="visibility:hidden">'+users[i].type+'</td>');
+															     tr.append('<td style="visibility:hidden">'+users[i].id+'</td>');
 															     tbody.append(tr);
 														}
 													}
@@ -170,11 +170,7 @@
 		$("#add").on("click", function() {
 			window.location.href = "addUser.jsp";
 		});
-// 		$(".update").on("click", function() {
-// 		    alert(1);
-// 		    localStorage.a = 3;
-// 			window.location.href = "addUser.jsp";
-// 		});
+
        function update(e) {
        debugger;
        var p = e.parentNode.parentNode.children;
@@ -182,14 +178,9 @@
        for(var i=0;i<p.length;i++){
            a.push(p[i]);
        }
-       localStorage.name = a[0].innerHTML;
-       localStorage.phoneNumber = a[1].innerHTML;
-       localStorage.type = a[4].innerHTML;
-    //   console.log(a);
-//        var e = e;
-//        console.log(id);
-// 		    localStorage.a = 3;
-// 			window.location.href = "addUser.jsp";
+       localStorage.userId = a[4].innerHTML;
+       localStorage.doType = "2";
+ 	   window.location.href = "addUser.jsp";
 	}
 	</script>
 </body>

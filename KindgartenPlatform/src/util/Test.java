@@ -2,7 +2,9 @@ package util;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONObject;
 
@@ -14,12 +16,27 @@ import bean.Class;
 import bean.User;
 
 public class Test {
+	public final static Map map = new HashMap();  
+
+	static {  
+
+	    map.put("key1", "value1");  
+
+	    map.put("key2", "value2");  
+
+	}  
+	
+	public static void  a() {
+		
+		String v = (String) map.get("key1");
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-       User user = new User();
-       user.setId(1L);
-       user.setName("123");
+		a();
+//       User user = new User();
+//       user.setId(1L);
+//       user.setName("123");
 //       Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 //       String json = gson.toJson(user);
 //      JSONObject js = JSONObject.fromObject(user);

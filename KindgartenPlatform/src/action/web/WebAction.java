@@ -61,19 +61,26 @@ public class WebAction extends ActionSupport {
 	public void getAllClassesInfo(){
 		try {
 		System.out.println("进入getAllClassesInfo ");
+		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-	   // 查询classes
-	   JSONObject jsonobj = basicService.queryClassesInfo();
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		if (jsonobj != null) {
-			System.out.println("getAllClassesInfo response :" + jsonobj.toString());
-			out.println(jsonobj.toString());
-		} else {
-			System.out.println("getAllClassesInfo response is null");
-		}
-		out.flush();
-		out.close();
+		String loginRequest = URLDecoder.decode(
+				request.getParameter("orderJson"), "UTF-8");
+		JSONObject json = JSONObject.fromObject(loginRequest);
+		// 查询classes
+		if(json !=null){
+			
+			 JSONObject jsonobj = basicService.queryClassesInfo(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (jsonobj != null) {
+					System.out.println("getAllClassesInfo response :" + jsonobj.toString());
+					out.println(jsonobj.toString());
+				} else {
+					System.out.println("getAllClassesInfo response is null");
+				}
+				out.flush();
+				out.close();
+		   }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

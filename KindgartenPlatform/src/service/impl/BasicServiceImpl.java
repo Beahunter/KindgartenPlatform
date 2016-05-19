@@ -40,6 +40,9 @@ public class BasicServiceImpl implements IBasicService {
 				user.getPassword(), user.getType());
 		// 获取科目详情
 		List<Subject> lsyUsbSubject = subjectDao.getAll();
+		// 获取所有user
+		String hql1 ="select u from User u where u.type !=0";
+		List<User> lstUser1 = userDao.createQuery(hql1).list();
 		JSONObject json = new JSONObject();
 		// 判断是否存在
 		if (lstUser != null && lstUser.size() > 0) {
@@ -60,6 +63,7 @@ public class BasicServiceImpl implements IBasicService {
 			json.put("userName", lstUser.get(0).getName());
 			json.put("userPhoto", lstUser.get(0).getPhoto());
 			json.put("subject", lsyUsbSubject);
+			json.put("users", lstUser1);
 		} else {
 			json.put("status", "0");
 		}
@@ -296,16 +300,30 @@ public class BasicServiceImpl implements IBasicService {
 		return json;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public JSONObject queryClassesInfo() throws Exception {
+	public JSONObject queryClassesInfo(JSONObject json) throws Exception {
 		// TODO Auto-generated method stub
 		List<Class> lstClass = classDao.getAll();
-		JSONObject json = new JSONObject();
-		json.put("status", "1");
-		if(lstClass!=null && lstClass.size()>0){
-			json.put("classes", lstClass);
+		JSONObject json1 = new JSONObject();
+		json1.put("status", "1");
+		String type = json.getString("type");
+		if(type.equals("1")){// add
+		
+		}else if(type.equals("2")){//update
+			String userId = json.getString("userId");
+			User u  = userDao.findUniqueBy("id", Long.valueOf(userId));
+			json1.put("user", u);
+			String hql = "select c from ClassUser cu , Class c where cu.classId = c.id and cu.userId = ? ";
+			List<Class> lstClass1 = classDao.createQuery(hql, Long.valueOf(userId)).list();
+			if(lstClass1 !=null && lstClass1.size()>0){
+				json1.put("myClasses", lstClass1);
+			}
 		}
-		return json;
+		if(lstClass!=null && lstClass.size()>0){
+			json1.put("classes", lstClass);
+		}
+		return json1;
 	}
 	
 	@SuppressWarnings("unchecked")
