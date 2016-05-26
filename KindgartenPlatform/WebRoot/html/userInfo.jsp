@@ -67,7 +67,7 @@
 		<div class="row row-offset-top">
 			<div class="col-sm-12">
 				<div class="table-container">
-					<table class="table table-hover table-bordered js-table">
+					<table class="table table-hover table-bordered js-table" id="userTable">
 						<thead>
 							<tr>
 
@@ -139,7 +139,7 @@
 															     tr.append('<td>'+users[i].name+'</td>');
 															     tr.append('<td>'+users[i].phoneNumber+'</td>');
 															     tr.append('<td>'+type+'</td>');
-															     tr.append('<td align="center"><button class="btn btn-primary btn-sm delete" name="delete">删除</button> <button class="btn btn-primary btn-sm update" name="update"  onclick="update(this)" >修改</button></td>');
+															     tr.append('<td align="center"><button class="btn btn-primary btn-sm delete" name="delete" onclick="deleteUser(this)">删除</button> <button class="btn btn-primary btn-sm update" name="update"  onclick="update(this)" >修改</button></td>');
 															     tr.append('<td style="visibility:hidden">'+users[i].id+'</td>');
 															     tbody.append(tr);
 														}
@@ -171,8 +171,23 @@
 			window.location.href = "addUser.jsp";
 		});
 
+       function deleteUser(e){
+       var p = e.parentNode.parentNode.children;
+       var a =[] ;
+       for(var i=0;i<p.length;i++){
+           a.push(p[i]);
+       }
+       var userId = a[4].innerHTML;
+       var json = new Object();
+       json.userId = userId;
+       var str = JSON.stringify(json);
+			sendData1(str,e);
+//        var i=e.parentNode.parentNode.rowIndex;
+//         document.getElementById('userTable').deleteRow(i);
+        
+       }
+
        function update(e) {
-       debugger;
        var p = e.parentNode.parentNode.children;
        var a =[] ;
        for(var i=0;i<p.length;i++){
@@ -182,6 +197,52 @@
        localStorage.doType = "2";
  	   window.location.href = "addUser.jsp";
 	}
+	
+	function sendData1(str,e) {
+		//	$.block();
+			setTimeout(
+					function() {
+						$
+								.ajax({
+									type : 'post',
+									url : ipVal
+											+ 'web/webAction!deleteUser',
+									dataType : 'text',
+									data : "orderJson=" + str,
+									success : function(data, requestCode) {
+
+										if (requestCode.indexOf("success") != -1) {
+											if (data != null && data != "") {
+												console.log(data);
+												var userback = JSON.parse(data);
+												var status = userback.status;
+												if (status != null
+														&& status.indexOf("1") != -1) {
+														       var i=e.parentNode.parentNode.rowIndex;
+                                                               document.getElementById('userTable').deleteRow(i);
+												//	$.unblock();
+												} else {
+													$.unblock();
+													alert("数据请求失败");
+												}
+											} else {
+												$.unblock();
+												alert("数据请求失败");
+											}
+
+										} else {
+											//  removeLoading();
+											//  uexWindow.closeToast();
+											$.unblock();
+											alert("请求发送失败");
+										}
+										// var userback = JSON.parse(data);
+										//   console.log("nnnnnn"+userback.phoneNumber);
+									}
+
+								})
+					}, 1000);
+		}
 	</script>
 </body>
 </html>

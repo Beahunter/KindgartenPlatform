@@ -47,8 +47,12 @@ public interface IBasicService {
 	
 	public JSONObject updateUserHeaderImage(Long userId,String photo) throws Exception;
     
+	public JSONObject deleteUser(JSONObject json) throws Exception;
+	
 	public JSONObject queryClassesInfo(JSONObject json) throws Exception;
 	public JSONObject queryAllUsersInfo() throws Exception;
 	public JSONObject queryAllSubjectInfo() throws Exception;
+	
+	
 	
 }

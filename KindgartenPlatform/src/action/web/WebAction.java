@@ -143,15 +143,15 @@ public class WebAction extends ActionSupport {
 			JSONObject returnJson = null;
 			if (json != null) {
 				System.out.println(json.toString());
-				returnJson = basicService.updateUserPassword(json);
+				returnJson = basicService.saveOrUpdateUser(json);
 				response.setContentType("text/html;charset=utf-8");
 				PrintWriter out = response.getWriter();
 				if (returnJson != null) {
-					System.out.println("saveCookbookInfo response :"
+					System.out.println("saveOrUpdateUser response :"
 							+ returnJson.toString());
 					out.println(returnJson.toString());
 				} else {
-					System.out.println("saveCookbookInfo response is null");
+					System.out.println("saveOrUpdateUser response is null");
 				}
 				out.flush();
 				out.close();
@@ -161,6 +161,38 @@ public class WebAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void deleteUser(){
+		try {
+			System.out.println("进入deleteUser ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if (json != null) {
+				System.out.println(json.toString());
+				returnJson = basicService.deleteUser(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("deleteUser response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("deleteUser response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public IBasicService getBasicService() {
 		return basicService;

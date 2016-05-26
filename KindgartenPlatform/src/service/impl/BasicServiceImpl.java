@@ -10,12 +10,14 @@ import net.sf.json.JSONObject;
 import service.IBasicService;
 import util.DateUtils;
 import bean.Class;
+import bean.ClassUser;
 import bean.Homework;
 import bean.Study;
 import bean.Subject;
 import bean.Temperature;
 import bean.User;
 import dao.IClassDao;
+import dao.IClassUserDao;
 import dao.IHomeWorkDao;
 import dao.IStudyDao;
 import dao.ISubjectDao;
@@ -29,6 +31,7 @@ public class BasicServiceImpl implements IBasicService {
 	private IHomeWorkDao homeworkDao;
 	private IStudyDao studyDao;
 	private ISubjectDao subjectDao;
+	private IClassUserDao classUserDao;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -383,15 +386,80 @@ public class BasicServiceImpl implements IBasicService {
 	public JSONObject saveOrUpdateUser(JSONObject json) throws Exception {
 		// TODO Auto-generated method stub
 		JSONObject json1 = new JSONObject();
-		json1.put("status", "1");
+		String status = "1";
 		String phoneNumber = json.getString("phoneNumber");
 		String name = json.getString("name");
+		String doType = json.getString("doType");
 		String type = json.getString("type");
 		String pas = json.getString("pas");
+		String[] classes = json.getString("classes").split(",");
+		if(doType.equals("1")){
+			User u = userDao.findUniqueBy("phoneNumber", Long.valueOf(phoneNumber));
+			if(u!=null ){
+				status = "2";
+			}else{
+				User user = new User();
+				user.setPhoneNumber(Long.valueOf(phoneNumber));
+				user.setName(name);
+				user.setPassword(pas);
+				user.setType(Short.valueOf(type));
+				userDao.save(user);
+				if(classes!=null && classes.length>0){
+					for(int i =0;i<classes.length;i++){
+						if(classes[i]!=null && classes[i]!=""){
+							ClassUser cu = new ClassUser();
+							cu.setUserId(user.getId());
+							cu.setClassId(Long.valueOf(classes[i]));
+							classUserDao.save(cu);
+						}
+					}
+				}
+			}
+		}else if(doType.equals("2")){
+			String id =json.getString("userId");
+			User u = userDao.findUniqueBy("id", Long.valueOf(id));
+			if(u==null){
+				status = "3";
+			}else{
+				u.setPhoneNumber(Long.valueOf(phoneNumber));
+				u.setName(name);
+				u.setPassword(pas);
+				u.setType(Short.valueOf(type));
+				userDao.update(u);
+				List<ClassUser> lstClassUser = classUserDao.findBy("userId", u.getId());
+				if(lstClassUser!=null && lstClassUser.size()>0){
+					for(ClassUser cu : lstClassUser){
+						classUserDao.remove(cu);
+					}
+				}
+				if(classes!=null && classes.length>0){
+					for(int i =0;i<classes.length;i++){
+						if(classes[i]!=null && classes[i]!=""){
+							ClassUser cu = new ClassUser();
+							cu.setUserId(u.getId());
+							cu.setClassId(Long.valueOf(classes[i]));
+							classUserDao.save(cu);
+						}
+					}
+				}
+			}
+			
+		}
+		json1.put("status", status);
 		//List<user> 
-		return null;
+		return json1;
 	}
 
+	@Override
+	public JSONObject deleteUser(JSONObject json) throws Exception {
+		// TODO Auto-generated method stub
+		String userId = json.getString("userId");
+		JSONObject json1 = new JSONObject();
+		json1.put("status", "1");
+		userDao.removeById(Long.valueOf(userId));
+		return json1;
+	}
+	
 	@Override
 	public boolean register(User user) {
 		// TODO Auto-generated method stub
@@ -449,7 +517,15 @@ public class BasicServiceImpl implements IBasicService {
 		this.subjectDao = subjectDao;
 	}
 
+	public IClassUserDao getClassUserDao() {
+		return classUserDao;
+	}
 
+	public void setClassUserDao(IClassUserDao classUserDao) {
+		this.classUserDao = classUserDao;
+	}
+
+    
 
 
 
