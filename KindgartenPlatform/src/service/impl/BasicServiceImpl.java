@@ -457,8 +457,85 @@ public class BasicServiceImpl implements IBasicService {
 		JSONObject json1 = new JSONObject();
 		json1.put("status", "1");
 		userDao.removeById(Long.valueOf(userId));
+		List<ClassUser> lstClassUser = classUserDao.findBy("userId", Long.valueOf(userId));
+		if(lstClassUser !=null && lstClassUser.size()>0){
+			for(ClassUser classUser : lstClassUser){
+				classUserDao.remove(classUser);
+			}
+		}
 		return json1;
 	}
+	
+	@Override
+	public JSONObject updateClass(JSONObject json) throws Exception {
+		// TODO Auto-generated method stub
+		String doType = json.getString("doType");
+		JSONObject json1 = new JSONObject();
+		String status="";
+		if(doType.equals("1")){
+			String name  = json.getString("name");
+			Class c = new Class();
+			c.setName(name);
+			c.setNumber(0);
+			classDao.save(c);
+			status ="1";
+			json1.put("classes",c);
+		}else if(doType.equals("2")){
+			String name  = json.getString("name");
+			String id  =  json.getString("classId");
+			Class c = new Class();
+			c.setId(Long.valueOf(id));
+			c.setName(name);
+			c.setNumber(0);
+			classDao.update(c);
+			status="2";
+			json1.put("classes",c);
+		}else if(doType.equals("3")){
+			String id  =  json.getString("classId");
+			classDao.removeById(Long.valueOf(id));
+			List<ClassUser> lstClassUser = classUserDao.findBy("classId", Long.valueOf(id));
+			if(lstClassUser !=null && lstClassUser.size()>0){
+				for(ClassUser classUser : lstClassUser){
+					classUserDao.remove(classUser);
+				}
+			}
+			status="3";
+		}
+		json1.put("status",status);
+		return json1;
+	}
+
+	@Override
+	public JSONObject updateSubject(JSONObject json) throws Exception {
+		// TODO Auto-generated method stub
+		String doType = json.getString("doType");
+		JSONObject json1 = new JSONObject();
+		String status="";
+		if(doType.equals("1")){
+			String name  = json.getString("name");
+			Subject s = new Subject();
+			s.setName(name);
+			subjectDao.save(s);
+			status ="1";
+			json1.put("subject",s);
+		}else if(doType.equals("2")){
+			String name  = json.getString("name");
+			String id  =  json.getString("id");
+			Subject s = new Subject();
+			s.setId(Long.valueOf(id));
+			s.setName(name);
+			subjectDao.update(s);
+			status="2";
+			json1.put("subject",s);
+		}else if(doType.equals("3")){
+			String id  =  json.getString("id");
+			subjectDao.removeById(Long.valueOf(id));
+			status="3";
+		}
+		json1.put("status",status);
+		return json1;
+	}
+
 	
 	@Override
 	public boolean register(User user) {
@@ -524,6 +601,8 @@ public class BasicServiceImpl implements IBasicService {
 	public void setClassUserDao(IClassUserDao classUserDao) {
 		this.classUserDao = classUserDao;
 	}
+
+	
 
     
 

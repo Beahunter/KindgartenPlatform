@@ -193,6 +193,66 @@ public class WebAction extends ActionSupport {
 		}
 	}
 	
+	public void updateClass(){
+		try {
+			System.out.println("进入updateClass ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if (json != null) {
+				System.out.println(json.toString());
+				returnJson = basicService.updateClass(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("updateClass response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("updateClass response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateSubject(){
+		try {
+			System.out.println("进入updateSubject ");
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			String loginRequest = URLDecoder.decode(
+					request.getParameter("orderJson"), "UTF-8");
+			JSONObject json = JSONObject.fromObject(loginRequest);
+			JSONObject returnJson = null;
+			if (json != null) {
+				System.out.println(json.toString());
+				returnJson = basicService.updateSubject(json);
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				if (returnJson != null) {
+					System.out.println("updateSubject response :"
+							+ returnJson.toString());
+					out.println(returnJson.toString());
+				} else {
+					System.out.println("updateSubject response is null");
+				}
+				out.flush();
+				out.close();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public IBasicService getBasicService() {
 		return basicService;

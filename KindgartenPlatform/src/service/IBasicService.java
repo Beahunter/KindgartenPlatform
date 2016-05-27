@@ -49,6 +49,10 @@ public interface IBasicService {
     
 	public JSONObject deleteUser(JSONObject json) throws Exception;
 	
+	public JSONObject updateClass(JSONObject json) throws Exception;
+	
+	public JSONObject updateSubject(JSONObject json) throws Exception;
+	
 	public JSONObject queryClassesInfo(JSONObject json) throws Exception;
 	public JSONObject queryAllUsersInfo() throws Exception;
 	public JSONObject queryAllSubjectInfo() throws Exception;

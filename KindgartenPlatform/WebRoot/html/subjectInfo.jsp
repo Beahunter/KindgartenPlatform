@@ -66,7 +66,7 @@
 		<div class="row row-offset-top">
 			<div class="col-sm-12">
 				<div class="table-container">
-					<table class="table table-hover table-bordered js-table">
+					<table class="table table-hover table-bordered js-table" id="subjectTable">
 						<thead>
 							<tr>
 
@@ -92,26 +92,123 @@
 	</div>
 	<script src="my.js"></script>
 <script type="text/javascript">
+    var doType = "1";
+	var id = "";
 	$(document).ready(function() {
                 sendData("");
 		});
     $("#add").on("click",function() {
-      show_prompt();
+      show_prompt(null);
     });
-    $("#update").on("click",function() {
-      show_prompt();
-    });
-    function show_prompt(){  
+    
+    function deleteSubject(e){
+       var p = e.parentNode.parentNode.children;
+       var a =[] ;
+       for(var i=0;i<p.length;i++){
+           a.push(p[i]);
+       }
+       id = a[2].innerHTML;
+       var json = new Object();
+       json.id = id;
+       json.doType ="3";
+       var str = JSON.stringify(json);
+			sendData1(str,e);
+        
+       }
+
+   function update(e) {
+       var p = e.parentNode.parentNode.children;
+       var a =[] ;
+       for(var i=0;i<p.length;i++){
+           a.push(p[i]);
+       }
+       id = a[2].innerHTML;
+       doType ="2";
+       show_prompt(e);
+	}
+    function show_prompt(e){  
     var value = prompt('班级名字：', '');  
     if(value == null){  
         // alert('班级名不能为空，请重新输入！');    
     }else if(value == ''){  
         alert('班级名不能为空，请重新输入！');  
-        show_prompt();  
+        show_prompt(e);  
     }else{  
-        alert("添加成功");  
-    }  
-    }  
+        var json = new Object();
+        json.doType = doType;
+        json.name =value;
+        if(doType =="1"){
+        }else if(doType =="2"){
+         json.id =id;
+        }
+        var str = JSON.stringify(json);
+			sendData1(str,e);
+     }  
+    }   
+    
+    function sendData1(str,e) {
+		//	$.block();
+			setTimeout(
+					function() {
+						$
+								.ajax({
+									type : 'post',
+									url : ipVal
+											+ 'web/webAction!updateSubject',
+									dataType : 'text',
+									data : "orderJson=" + str,
+									success : function(data, requestCode) {
+
+										if (requestCode.indexOf("success") != -1) {
+											if (data != null && data != "") {
+												console.log(data);
+												var userback = JSON.parse(data);
+												var status = userback.status;
+												if (status != null
+														&& status.indexOf("1") != -1) {
+														var subject = userback.subject;
+														 var tbody = $("#tbody");
+														 var tr =  $("<tr></tr>");
+															     tr.append('<td>'+subject.name+'</td>');
+															     tr.append('<td align="center"><button class="btn btn-primary btn-sm" name="delete" onclick="deleteSubject(this)">删除</button> <button class="btn btn-primary btn-sm" name="update" onclick="update(this)">修改</button></td>');
+															     tr.append('<td style="visibility:hidden">'+subject.id+'</td>');
+														alert("添加成功");  
+													    tbody.append(tr);    
+												//	$.unblock();
+												} else if(status != null
+														&& status.indexOf("2") != -1){
+														var subject = userback.subject;
+														alert("修改成功"); 
+														e.parentNode.parentNode.children[0].innerHTML =subject.name;
+												}else if(status != null
+														&& status.indexOf("3") != -1){
+													    var i=e.parentNode.parentNode.rowIndex;
+                                                       document.getElementById('subjectTable').deleteRow(i);
+												}
+												else {
+													$.unblock();
+													alert("数据请求失败");
+												}
+											} else {
+												$.unblock();
+												alert("数据请求失败");
+											}
+
+										} else {
+											//  removeLoading();
+											//  uexWindow.closeToast();
+											$.unblock();
+											alert("请求发送失败");
+										}
+										// var userback = JSON.parse(data);
+										//   console.log("nnnnnn"+userback.phoneNumber);
+									}
+
+								})
+					}, 1000);
+		}
+    
+    
      function sendData(str) {
 			$.block();
 			setTimeout(
@@ -140,7 +237,7 @@
 														for (var i = 0; i < subjects.length; i++) {
 															 var tr =  $("<tr></tr>");
 															     tr.append('<td>'+subjects[i].name+'</td>');
-															     tr.append('<td align="center"><button class="btn btn-primary btn-sm" name="delete">删除</button> <button class="btn btn-primary btn-sm" name="update">修改</button></td>');
+															     tr.append('<td align="center"><button class="btn btn-primary btn-sm" name="delete" onclick="deleteSubject(this)">删除</button> <button class="btn btn-primary btn-sm" name="update" onclick="update(this)">修改</button></td>');
 															     tr.append('<td style="visibility:hidden">'+subjects[i].id+'</td>');
 															     tbody.append(tr);
 														}

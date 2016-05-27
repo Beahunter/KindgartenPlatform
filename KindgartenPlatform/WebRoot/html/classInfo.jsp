@@ -66,7 +66,7 @@
 		<div class="row row-offset-top">
 			<div class="col-sm-12">
 				<div class="table-container">
-					<table class="table table-hover table-bordered js-table">
+					<table class="table table-hover table-bordered js-table" id="classTable">
 						<thead>
 							<tr>
 
@@ -111,13 +111,12 @@
        for(var i=0;i<p.length;i++){
            a.push(p[i]);
        }
-       var userId = a[4].innerHTML;
+       classId = a[2].innerHTML;
        var json = new Object();
-       json.userId = userId;
+       json.classId = classId;
+       json.doType ="3";
        var str = JSON.stringify(json);
 			sendData1(str,e);
-//        var i=e.parentNode.parentNode.rowIndex;
-//         document.getElementById('userTable').deleteRow(i);
         
        }
 
@@ -159,7 +158,7 @@
 								.ajax({
 									type : 'post',
 									url : ipVal
-											+ 'web/webAction!deleteUser',
+											+ 'web/webAction!updateClass',
 									dataType : 'text',
 									data : "orderJson=" + str,
 									success : function(data, requestCode) {
@@ -171,10 +170,26 @@
 												var status = userback.status;
 												if (status != null
 														&& status.indexOf("1") != -1) {
-														       var i=e.parentNode.parentNode.rowIndex;
-                                                               document.getElementById('userTable').deleteRow(i);
+														var classes = userback.classes;
+														 var tbody = $("#tbody");
+														 var tr =  $("<tr></tr>");
+															     tr.append('<td>'+classes.name+'</td>');
+															     tr.append('<td align="center"><button class="btn btn-primary btn-sm" name="delete" onclick="deleteClass(this)">删除</button> <button class="btn btn-primary btn-sm" name="update" onclick="update(this)">修改</button></td>');
+															     tr.append('<td style="visibility:hidden">'+classes.id+'</td>');
+														alert("添加成功");  
+													    tbody.append(tr);    
 												//	$.unblock();
-												} else {
+												} else if(status != null
+														&& status.indexOf("2") != -1){
+														var classes = userback.classes;
+														alert("修改成功"); 
+														e.parentNode.parentNode.children[0].innerHTML =classes.name;
+												}else if(status != null
+														&& status.indexOf("3") != -1){
+													    var i=e.parentNode.parentNode.rowIndex;
+                                                       document.getElementById('classTable').deleteRow(i);
+												}
+												else {
 													$.unblock();
 													alert("数据请求失败");
 												}
