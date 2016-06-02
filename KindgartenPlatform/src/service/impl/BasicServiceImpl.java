@@ -333,11 +333,18 @@ public class BasicServiceImpl implements IBasicService {
 	@Override
 	public JSONObject queryAllUsersInfo() throws Exception {
 		// TODO Auto-generated method stub
-		String hql ="select u from User u where u.type !=0";
+	    String hql1 = "select c.name from User u , ClassUser cu ,Class c where u.id = cu.userId and c.id = cu.classId and u.id= ?";
+		String hql ="select u from User u where u.type !=0 order by u.type asc , u.phoneNumber asc";
 		List<User> lstUser = userDao.createQuery(hql).list();
 		JSONObject json = new JSONObject();
+		JSONObject json1 = new JSONObject();
 		json.put("status", "1");
 		if(lstUser!=null && lstUser.size()>0){
+			for(User u : lstUser){
+				List list = userDao.createQuery(hql1, u.getId()).list();
+				json1.put(u.getId(), list);
+			}
+			json.put("classuser", json1);
 			json.put("users", lstUser);
 		}
 		return json;

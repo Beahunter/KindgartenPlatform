@@ -74,6 +74,7 @@
 								<th>用户名</th>
 								<th>电话号码</th>
 								<th>权限</th>
+								<th>所属班级</th>
 								<th>操作</th>
 
 
@@ -121,13 +122,35 @@
 												if (status != null
 														&& status.indexOf("1") != -1) {
 													var users = userback.users;
+													var classuser = userback.classuser;
 													 var tbody = $("#tbody");
 													  tbody.html("");
 													if (users != null
 															&& users.length > 0) {
 														for (var i = 0; i < users.length; i++) {
+													     //	debugger;
+														    
 														     var type="";
+														     var className = "";
+														     if(classuser !=null ){
+														       //var userid = users[i].id;
+														       var classes = classuser[users[i].id];
+														       if(classes !=null && classes.length >0){
+														          for(var k =0;k<classes.length;k++){
+														           if(users[i].type == 1){
+														             className +="所有班级";
+														           }else{
+														              if(k==(classes.length-1)){
+														                className+=classes[k];
+														              }else{
+														                className+=classes[k]+"、";
+														              }
+														           } 
+														          }
+														       }
+														     }
 														     if(users[i].type == 1){
+														     className ="所有班级";
 														         type="园长";
 														     }else if(users[i].type ==2){
 														         type="教师";
@@ -139,6 +162,8 @@
 															     tr.append('<td>'+users[i].name+'</td>');
 															     tr.append('<td>'+users[i].phoneNumber+'</td>');
 															     tr.append('<td>'+type+'</td>');
+// 															     <ul><li>小班</li><li>中班</li></ul>
+															     tr.append('<td>'+className+'</td>');
 															     tr.append('<td align="center"><button class="btn btn-primary btn-sm delete" name="delete" onclick="deleteUser(this)">删除</button> <button class="btn btn-primary btn-sm update" name="update"  onclick="update(this)" >修改</button></td>');
 															     tr.append('<td style="visibility:hidden">'+users[i].id+'</td>');
 															     tbody.append(tr);
@@ -177,7 +202,7 @@
        for(var i=0;i<p.length;i++){
            a.push(p[i]);
        }
-       var userId = a[4].innerHTML;
+       var userId = a[5].innerHTML;
        var json = new Object();
        json.userId = userId;
        var str = JSON.stringify(json);
@@ -193,7 +218,7 @@
        for(var i=0;i<p.length;i++){
            a.push(p[i]);
        }
-       localStorage.userId = a[4].innerHTML;
+       localStorage.userId = a[5].innerHTML;
        localStorage.doType = "2";
  	   window.location.href = "addUser.jsp";
 	}

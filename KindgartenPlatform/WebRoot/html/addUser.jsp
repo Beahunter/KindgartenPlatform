@@ -64,7 +64,7 @@
 				<div class="">
 					<div class="row">
 						<div class="col-sm-3">
-							<label>*用户名:</label>
+							<label>&nbsp;*用户名:</label>
 						</div>
 						<div class="col-sm-9">
 							<div class="form-inline">
@@ -77,7 +77,7 @@
 					</div>
 					<div class="row row-offset-top">
 						<div class="col-sm-3">
-							<label>*电话号码:</label>
+							<label>&nbsp;*电话号码:</label>
 						</div>
 						<div class="col-sm-9">
 							<div class="form-inline">
@@ -107,7 +107,7 @@
 				</div>
 				<div class="row row-offset-top">
 					<div class="col-sm-3">
-						<label>&nbsp;*班级:</label>
+						<label>&nbsp;*所属班级:</label>
 					</div>
 					<div class="col-sm-9">
 						<div class="form-inline">
@@ -122,7 +122,7 @@
 
 				<div class="row row-offset-top ">
 					<div class="col-sm-3">
-						<label>*密码:</label>
+						<label>&nbsp;*密码:</label>
 					</div>
 					<div class="col-sm-9">
 						<div class="form-inline">
@@ -342,10 +342,10 @@
 																	for (var i = 0; i < myClasses.length; i++) {
 																		$(
 																				"input:checkbox[value='"
-																						+ myClasses.id
+																						+ myClasses[i].id
 																						+ "']")
 																				.attr(
-																						'checked',
+																						"checked",
 																						true);
 																	}
 																}
